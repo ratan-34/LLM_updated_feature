@@ -1,0 +1,227 @@
+2025-06-02 03:44:02,946 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 03:44:50,734 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 03:45:26,631 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 04:26:30,813 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 04:29:15,641 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 04:34:49,665 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 04:34:49,901 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 04:34:49,903 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-02 04:34:49,926 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 04:34:58,811 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 04:34:59,038 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 04:34:59,044 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 04:35:00,882 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:35:00] "GET / HTTP/1.1" 200 -
+2025-06-02 04:35:13,381 - upload_handler - INFO - New session created: d59863a8-08d7-480d-abfd-5e774f549496
+2025-06-02 04:35:13,391 - upload_handler - INFO - File saved: static/uploads\d59863a8-08d7-480d-abfd-5e774f549496_house_data1.csv
+2025-06-02 04:35:13,451 - upload_handler - INFO - File read successfully: house_data1.csv, shape: (5000, 7)
+2025-06-02 04:35:13,481 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:35:13] "POST /upload HTTP/1.1" 200 -
+2025-06-02 04:35:15,016 - automated_feature_engineering_backend - INFO - Automated Feature Engineering route accessed with session_id: d59863a8-08d7-480d-abfd-5e774f549496
+2025-06-02 04:35:15,016 - automated_feature_engineering_backend - INFO - Session set for Automated Feature Engineering: d59863a8-08d7-480d-abfd-5e774f549496
+2025-06-02 04:35:15,021 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:35:15] "GET /automated-feature-engineering?session_id=d59863a8-08d7-480d-abfd-5e774f549496 HTTP/1.1" 200 -
+2025-06-02 04:35:15,146 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:35:15] "[33mGET /static/automated-feature-engineering.html?session_id=d59863a8-08d7-480d-abfd-5e774f549496 HTTP/1.1[0m" 404 -
+2025-06-02 04:37:47,162 - automated_feature_engineering_backend - INFO - Automated Feature Engineering route accessed with session_id: d59863a8-08d7-480d-abfd-5e774f549496
+2025-06-02 04:37:47,162 - automated_feature_engineering_backend - INFO - Session set for Automated Feature Engineering: d59863a8-08d7-480d-abfd-5e774f549496
+2025-06-02 04:37:47,166 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:37:47] "GET /automated-feature-engineering?session_id=d59863a8-08d7-480d-abfd-5e774f549496 HTTP/1.1" 200 -
+2025-06-02 04:37:47,341 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 04:37:47] "[33mGET /static/automated-feature-engineering.html?session_id=d59863a8-08d7-480d-abfd-5e774f549496 HTTP/1.1[0m" 404 -
+2025-06-02 10:36:29,321 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 10:36:29,466 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 10:36:29,467 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-02 10:36:29,476 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 10:36:34,448 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 10:36:34,582 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 10:36:34,585 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 10:36:34,633 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 10:36:34] "GET / HTTP/1.1" 200 -
+2025-06-02 10:36:45,337 - upload_handler - INFO - New session created: 194a09f0-73b2-4baf-8173-2f2de97ee40d
+2025-06-02 10:36:45,342 - upload_handler - INFO - File saved: static/uploads\194a09f0-73b2-4baf-8173-2f2de97ee40d_house_data1.csv
+2025-06-02 10:36:45,387 - upload_handler - INFO - File read successfully: house_data1.csv, shape: (5000, 7)
+2025-06-02 10:36:45,401 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 10:36:45] "POST /upload HTTP/1.1" 200 -
+2025-06-02 10:36:48,195 - automated_feature_engineering_backend - INFO - Automated Feature Engineering route accessed with session_id: 194a09f0-73b2-4baf-8173-2f2de97ee40d
+2025-06-02 10:36:48,195 - automated_feature_engineering_backend - INFO - Session set for Automated Feature Engineering: 194a09f0-73b2-4baf-8173-2f2de97ee40d
+2025-06-02 10:36:48,199 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 10:36:48] "GET /automated-feature-engineering?session_id=194a09f0-73b2-4baf-8173-2f2de97ee40d HTTP/1.1" 200 -
+2025-06-02 10:36:48,231 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 10:36:48] "[33mGET /static/automated-feature-engineering.html?session_id=194a09f0-73b2-4baf-8173-2f2de97ee40d HTTP/1.1[0m" 404 -
+2025-06-02 14:16:21,853 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:16:21,975 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 14:16:21,975 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-02 14:16:21,986 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 14:16:25,208 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:16:25,356 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 14:16:25,361 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 14:16:25,397 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:16:25] "GET / HTTP/1.1" 200 -
+2025-06-02 14:16:25,515 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:16:25] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:16:35,718 - upload_handler - INFO - New session created: 6d2a57e6-41c9-4451-87da-cdee08c125ce
+2025-06-02 14:16:35,723 - upload_handler - INFO - File saved: static/uploads\6d2a57e6-41c9-4451-87da-cdee08c125ce_house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv
+2025-06-02 14:16:35,755 - upload_handler - INFO - File read successfully: house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv, shape: (100, 74)
+2025-06-02 14:16:35,776 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:16:35] "POST /upload HTTP/1.1" 200 -
+2025-06-02 14:16:38,166 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:16:38] "GET /llm_mesh?session_id=6d2a57e6-41c9-4451-87da-cdee08c125ce HTTP/1.1" 200 -
+2025-06-02 14:16:54,069 - httpx - INFO - HTTP Request: POST https://gen-ai-llm-deployment.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-04-01-preview "HTTP/1.1 200 OK"
+2025-06-02 14:16:54,089 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:16:54] "POST /api/llm_mesh/analyze HTTP/1.1" 200 -
+2025-06-02 14:17:09,497 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:09] "GET / HTTP/1.1" 200 -
+2025-06-02 14:17:18,716 - upload_handler - INFO - New session created: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:18,719 - upload_handler - INFO - File saved: static/uploads\5c8d8086-4d15-4da7-920d-bc2e299b635c_house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv
+2025-06-02 14:17:18,727 - upload_handler - INFO - File read successfully: house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv, shape: (100, 74)
+2025-06-02 14:17:18,737 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:18] "POST /upload HTTP/1.1" 200 -
+2025-06-02 14:17:21,050 - ai_copilot_backend - INFO - AI Copilot route accessed with session_id: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:21,050 - ai_copilot_backend - INFO - Session set for AI Copilot: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:21,050 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:21] "GET /ai-copilot?session_id=5c8d8086-4d15-4da7-920d-bc2e299b635c HTTP/1.1" 200 -
+2025-06-02 14:17:21,113 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:17:27,818 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:27] "[33mGET /geospatial-analytics?session_id=5c8d8086-4d15-4da7-920d-bc2e299b635c HTTP/1.1[0m" 404 -
+2025-06-02 14:17:30,723 - genai_docs_backend - INFO - GenAI Docs route accessed with session_id: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:30,723 - genai_docs_backend - INFO - Session set for GenAI Docs: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:30,813 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:30] "GET /genai-docs?session_id=5c8d8086-4d15-4da7-920d-bc2e299b635c HTTP/1.1" 200 -
+2025-06-02 14:17:30,940 - genai_docs_backend - INFO - GenAI Docs dataset info requested for session: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:31,013 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:31] "GET /api/genai-docs/dataset-info?session_id=5c8d8086-4d15-4da7-920d-bc2e299b635c HTTP/1.1" 200 -
+2025-06-02 14:17:36,294 - data_drift_detection_backend - INFO - Data Drift Detection route accessed with session_id: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:36,294 - data_drift_detection_backend - INFO - Session set for Data Drift Detection: 5c8d8086-4d15-4da7-920d-bc2e299b635c
+2025-06-02 14:17:36,294 - data_drift_detection_backend - ERROR - Error in data_drift_detection route: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-06-02 14:17:36,299 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:36] "[32mGET /data-drift-detection?session_id=5c8d8086-4d15-4da7-920d-bc2e299b635c HTTP/1.1[0m" 302 -
+2025-06-02 14:17:36,316 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:36] "GET / HTTP/1.1" 200 -
+2025-06-02 14:17:47,780 - upload_handler - INFO - New session created: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:17:47,787 - upload_handler - INFO - File saved: static/uploads\46f38fa1-b7d1-4355-b9e5-f139ff0e5188_house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv
+2025-06-02 14:17:47,789 - upload_handler - INFO - File read successfully: house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv, shape: (100, 74)
+2025-06-02 14:17:47,800 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:47] "POST /upload HTTP/1.1" 200 -
+2025-06-02 14:17:53,599 - model_training_deployment_backend - INFO - Model Training & Deployment route accessed with session_id: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:17:53,599 - model_training_deployment_backend - INFO - Session set for Model Training & Deployment: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:17:53,604 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:53] "GET /model-training-deployment?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1" 200 -
+2025-06-02 14:17:53,661 - model_training_deployment_backend - INFO - Model training dataset info requested for session: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:17:53,674 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:17:53] "GET /api/model-training/dataset-info?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1" 200 -
+2025-06-02 14:18:02,182 - embedded_ml_clustering_backend - INFO - Embedded ML Clustering route accessed with session_id: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:02,182 - embedded_ml_clustering_backend - INFO - Session set for Embedded ML Clustering: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:02,182 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:02] "GET /embedded-ml-clustering?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1" 200 -
+2025-06-02 14:18:02,252 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:02] "[33mGET /api/embedded-ml/dataset-info?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1[0m" 404 -
+2025-06-02 14:18:11,688 - time_series_forecasting_backend - INFO - Time Series Forecasting route accessed with session_id: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:11,688 - time_series_forecasting_backend - INFO - Session set for Time Series Forecasting: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:11,747 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:11] "GET /time-series-forecasting?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1" 200 -
+2025-06-02 14:18:11,813 - time_series_forecasting_backend - INFO - Time series dataset info requested for session: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:11,847 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:11] "GET /api/time-series/dataset-info?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1" 200 -
+2025-06-02 14:18:18,882 - ai_driven_cataloging_backend - INFO - AI-Driven Cataloging route accessed with session_id: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:18,882 - ai_driven_cataloging_backend - INFO - Session set for AI-Driven Cataloging: 46f38fa1-b7d1-4355-b9e5-f139ff0e5188
+2025-06-02 14:18:18,882 - ai_driven_cataloging_backend - ERROR - Error in ai_driven_cataloging route: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-06-02 14:18:18,882 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:18] "[32mGET /ai-driven-cataloging?session_id=46f38fa1-b7d1-4355-b9e5-f139ff0e5188 HTTP/1.1[0m" 302 -
+2025-06-02 14:18:18,892 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:18:18] "GET / HTTP/1.1" 200 -
+2025-06-02 14:19:56,099 - upload_handler - INFO - New session created: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:19:56,104 - upload_handler - INFO - File saved: static/uploads\a08eb73c-a625-49d0-880e-9b65b0cb3cf4_house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv
+2025-06-02 14:19:56,108 - upload_handler - INFO - File read successfully: house_data1.csv_prepared_2025-05-11T13-55-32-515Z.csv, shape: (100, 74)
+2025-06-02 14:19:56,125 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:19:56] "POST /upload HTTP/1.1" 200 -
+2025-06-02 14:19:59,028 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:19:59] "GET /code-free-modeling?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:19:59,166 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:19:59] "GET /api/code-free-modeling/analyze-dataset?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:08,532 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:08] "GET /prompt-engineering-interface?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:08,615 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:08] "GET /api/prompt-engineering/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:13,717 - integration_notebooks_backend - INFO - Integration Notebooks route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:13,717 - integration_notebooks_backend - INFO - Session set for Integration Notebooks: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:13,738 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:13] "GET /integration-notebooks?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:13,881 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:20:13,909 - integration_notebooks_backend - INFO - Dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:14,348 - integration_notebooks_backend - ERROR - Error in api_integration_notebooks_dataset_info: Object of type int64 is not JSON serializable
+2025-06-02 14:20:14,348 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:14] "[35m[1mGET /api/integration-notebooks/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1[0m" 500 -
+2025-06-02 14:20:25,177 - ai_data_enrichment_backend - INFO - AI Data Enrichment route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:25,177 - ai_data_enrichment_backend - INFO - Session set for AI Data Enrichment: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:25,191 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:25] "GET /ai-data-enrichment?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:25,277 - ai_data_enrichment_backend - INFO - AI Enrichment dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:25,341 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:25] "GET /api/ai-enrichment/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:30,333 - deploy_to_alteryx_promote - INFO - Deploy to Alteryx Promote route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:30,334 - deploy_to_alteryx_promote - INFO - Session set for Deploy to Alteryx Promote: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:30,346 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:30] "GET /deploy-to-alteryx-promote?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:30,422 - deploy_to_alteryx_promote - INFO - Alteryx Promote dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:20:30,479 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:30] "GET /api/alteryx-promote/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:20:34,509 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:20:34] "[33mGET /out-of-the-box-ml-solutions.html?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1[0m" 404 -
+2025-06-02 14:21:00,290 - model_governance_backend - INFO - Model Governance route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:00,290 - model_governance_backend - INFO - Session set for Model Governance: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:00,302 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:00] "GET /model-governance?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:00,383 - model_governance_backend - INFO - Model governance dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:00,436 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:00] "GET /api/model-governance/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:08,253 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:08] "[33mGET /integration-external-ml?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1[0m" 404 -
+2025-06-02 14:21:31,625 - clustering_backend - INFO - Clustering AutoML Visual route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:31,625 - clustering_backend - INFO - Session set for Clustering AutoML Visual: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:31,635 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:31] "GET /clustering-automl-visual?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:31,714 - clustering_backend - INFO - Clustering dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:31,772 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:31] "GET /api/clustering/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:36,032 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:36] "GET /object-detection?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:36,095 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:36] "[33mGET /placeholder.svg HTTP/1.1[0m" 404 -
+2025-06-02 14:21:40,194 - text_classification_summarization_backend - INFO - Text Classification route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:40,205 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:40] "GET /text-classification-summarization?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:40,354 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:40] "GET /api/text-classification-summarization/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:52,218 - nlp_tools_backend - INFO - NLP Tools route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:52,218 - nlp_tools_backend - INFO - Session set for NLP Tools: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:52,225 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:52] "GET /nlp-tools?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:52,289 - nlp_tools_backend - INFO - NLP Tools dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:21:52,304 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:52] "GET /api/nlp-tools/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:21:54,898 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:21:54] "GET /llm_mesh?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:22:01,285 - ai_copilot_backend - INFO - AI Copilot route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:01,285 - ai_copilot_backend - INFO - Session set for AI Copilot: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:01,286 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:01] "GET /ai-copilot?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:22:01,329 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:01] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:22:05,822 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:05] "[33mGET /geospatial-analytics?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1[0m" 404 -
+2025-06-02 14:22:10,691 - genai_docs_backend - INFO - GenAI Docs route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:10,691 - genai_docs_backend - INFO - Session set for GenAI Docs: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:10,691 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:10] "GET /genai-docs?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:22:10,755 - genai_docs_backend - INFO - GenAI Docs dataset info requested for session: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:10,800 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:10] "GET /api/genai-docs/dataset-info?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1" 200 -
+2025-06-02 14:22:14,790 - data_drift_detection_backend - INFO - Data Drift Detection route accessed with session_id: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:14,790 - data_drift_detection_backend - INFO - Session set for Data Drift Detection: a08eb73c-a625-49d0-880e-9b65b0cb3cf4
+2025-06-02 14:22:14,790 - data_drift_detection_backend - ERROR - Error in data_drift_detection route: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-06-02 14:22:14,790 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:14] "[32mGET /data-drift-detection?session_id=a08eb73c-a625-49d0-880e-9b65b0cb3cf4 HTTP/1.1[0m" 302 -
+2025-06-02 14:22:14,799 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:14] "GET / HTTP/1.1" 200 -
+2025-06-02 14:22:14,878 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:22:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:29:29,985 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\app.py', reloading
+2025-06-02 14:29:29,995 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\app.py', reloading
+2025-06-02 14:29:31,817 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 14:29:38,836 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:43:03,254 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:43:03,477 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 14:43:03,478 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-02 14:43:03,498 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 14:43:14,940 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:43:15,317 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 14:43:15,337 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 14:43:15,439 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:43:15] "GET / HTTP/1.1" 200 -
+2025-06-02 14:43:26,875 - upload_handler - INFO - New session created: 94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4
+2025-06-02 14:43:26,904 - upload_handler - INFO - File saved: static/uploads\94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4_house_data1.csv
+2025-06-02 14:43:27,215 - upload_handler - INFO - File read successfully: house_data1.csv, shape: (5000, 7)
+2025-06-02 14:43:27,532 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:43:27] "POST /upload HTTP/1.1" 200 -
+2025-06-02 14:43:31,605 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:43:31] "GET /embedded-ml-clustering?session_id=94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4 HTTP/1.1" 200 -
+2025-06-02 14:46:03,975 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:46:03] "GET /embedded-ml-clustering?session_id=94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4 HTTP/1.1" 200 -
+2025-06-02 14:50:51,106 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\embedded_ml_clustering_backend.py', reloading
+2025-06-02 14:50:51,106 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\embedded_ml_clustering_backend.py', reloading
+2025-06-02 14:50:51,111 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\embedded_ml_clustering_backend.py', reloading
+2025-06-02 14:50:51,915 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 14:51:07,048 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 14:51:07,265 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 14:51:07,272 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 14:51:07,334 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:51:07] "GET /embedded-ml-clustering?session_id=94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4 HTTP/1.1" 200 -
+2025-06-02 14:51:13,087 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 14:51:13] "GET /embedded-ml-clustering?session_id=94d296c1-d1e7-41b6-bd6f-14f5bc5b5ef4 HTTP/1.1" 200 -
+2025-06-02 15:04:01,615 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\app.py', reloading
+2025-06-02 15:04:01,615 - werkzeug - INFO -  * Detected change in 'D:\\ratn\\training dataset\\demo_LLM\\seperated_file\\app.py', reloading
+2025-06-02 15:04:02,890 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 15:05:18,266 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 15:05:18,593 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 15:05:18,593 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-02 15:05:18,624 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 15:05:28,584 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 15:05:28,833 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 15:05:28,843 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 15:05:28,918 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:28] "GET / HTTP/1.1" 200 -
+2025-06-02 15:05:29,043 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 15:05:39,336 - upload_handler - INFO - New session created: 9bb6722e-0654-4e30-a3a8-c59c146871b2
+2025-06-02 15:05:39,344 - upload_handler - INFO - File saved: static/uploads\9bb6722e-0654-4e30-a3a8-c59c146871b2_house_data1.csv
+2025-06-02 15:05:39,399 - upload_handler - INFO - File read successfully: house_data1.csv, shape: (5000, 7)
+2025-06-02 15:05:39,418 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:39] "POST /upload HTTP/1.1" 200 -
+2025-06-02 15:05:40,738 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:40] "GET /embedded-ml-clustering?session_id=9bb6722e-0654-4e30-a3a8-c59c146871b2 HTTP/1.1" 200 -
+2025-06-02 15:05:40,986 - embedded_ml_clustering_backend - ERROR - Error getting columns: 'data'
+2025-06-02 15:05:40,986 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:40] "[35m[1mPOST /api/clustering/get-columns HTTP/1.1[0m" 500 -
+2025-06-02 15:05:56,325 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:56] "GET /embedded-ml-clustering?session_id=9bb6722e-0654-4e30-a3a8-c59c146871b2 HTTP/1.1" 200 -
+2025-06-02 15:05:56,686 - embedded_ml_clustering_backend - ERROR - Error getting columns: 'data'
+2025-06-02 15:05:56,686 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:05:56] "[35m[1mPOST /api/clustering/get-columns HTTP/1.1[0m" 500 -
+2025-06-02 15:10:34,626 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Rushikesh\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\flask\\templating.py', reloading
+2025-06-02 15:10:34,646 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Rushikesh\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\jinja2\\__init__.py', reloading
+2025-06-02 15:10:34,653 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Rushikesh\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\jinja2\\environment.py', reloading
+2025-06-02 15:10:34,783 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Rushikesh\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\__init__.py', reloading
+2025-06-02 15:10:36,276 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-06-02 15:10:47,475 - __main__ - INFO - Azure OpenAI client initialized successfully
+2025-06-02 15:10:47,683 - werkzeug - WARNING -  * Debugger is active!
+2025-06-02 15:10:47,692 - werkzeug - INFO -  * Debugger PIN: 114-597-080
+2025-06-02 15:10:47,751 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2025 15:10:47] "GET / HTTP/1.1" 200 -

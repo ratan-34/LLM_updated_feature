@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded ML for Data Matching & Clustering - Dataiku</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3366FF;
+            --secondary-color: #6366F1;
+            --accent-color: #8B5CF6;
+            --dark-color: #1E293B;
+            --light-color: #F8FAFC;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --gradient-primary: linear-gradient(135deg, #3366FF 0%, #6366F1 50%, #8B5CF6 100%);
+            --gradient-secondary: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            color: var(--dark-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(51, 102, 255, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .main-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-section {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            border: 1px solid rgba(51, 102, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(51, 102, 255, 0.15);
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(51, 102, 255, 0.3);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #E2E8F0;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(51, 102, 255, 0.25);
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 12px 12px 0 0;
+            color: var(--dark-color);
+            font-weight: 600;
+            padding: 12px 24px;
+            margin-right: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .column-item {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .column-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(4px);
+        }
+        
+        .column-item.selected {
+            border-color: var(--primary-color);
+            background: rgba(51, 102, 255, 0.05);
+        }
+        
+        .column-info {
+            flex: 1;
+        }
+        
+        .column-name {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .column-type {
+            font-size: 0.875rem;
+            color: #64748B;
+        }
+        
+        .column-badge {
+            background: #E2E8F0;
+            color: #64748B;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        
+        .spinner-border {
+            color: var(--primary-color);
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        .cluster-visualization {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cluster-visualization img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+        
+        .instructions-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        
+        .instruction-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #F8FAFC;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .step-number {
+            background: var(--gradient-primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-description {
+            color: #64748B;
+            line-height: 1.6;
+        }
+        
+        .use-case-card {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .use-case-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(51, 102, 255, 0.1);
+        }
+        
+        .use-case-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 0.75rem;
+        }
+        
+        .use-case-description {
+            color: #64748B;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .dataset-info {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background: #E2E8F0;
+        }
+        
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .header-section {
+                padding: 2rem 1rem;
+            }
+            
+            .instruction-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                    <path d="M8 12h16v8H8z" fill="white" opacity="0.9"/>
+                    <path d="M12 8h8v16h-8z" fill="white" opacity="0.7"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#3366FF"/>
+                            <stop offset="50%" style="stop-color:#6366F1"/>
+                            <stop offset="100%" style="stop-color:#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                Dataiku - Embedded ML Clustering
+            </a>
+            <div class="d-flex align-items-center">
+                <div class="dataset-info me-3">
+                    <i class="bi bi-table me-2"></i>
+                    <span id="dataset-name">Loading dataset...</span>
+                    <span class="badge bg-secondary ms-2" id="row-count">0 rows</span>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" onclick="window.close()">
+                    <i class="bi bi-x-lg me-1"></i>
+                    Close
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h4 class="mt-3">Processing your request...</h4>
+            <p class="text-muted">This may take a few moments</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="header-content">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-diagram-3-fill me-3"></i>
+                    Embedded ML for Data Matching & Clustering
+                </h1>
+                <p class="lead mb-0">
+                    Leverage advanced machine learning algorithms to discover patterns, group similar records, 
+                    and optimize your ETL workflows with intelligent data clustering and matching capabilities.
+                </p>
+            </div>
+        </div>
+
+        <!-- Configuration Section -->
+        <div class="row" id="configuration-section">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-transparent border-0 p-4">
+                        <h3 class="mb-0">
+                            <i class="bi bi-gear me-2"></i>
+                            Configure Your Clustering Analysis
+                        </h3>
+                        <p class="text-muted mb-0">Select features and configure algorithms to discover meaningful patterns in your data</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Configuration Tabs -->
+                        <ul class="nav nav-tabs mb-4" id="configTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="columns-tab" data-bs-toggle="tab" data-bs-target="#columns-tab-pane" type="button" role="tab">
+                                    <i class="bi bi-list-columns me-2"></i>
+                                    Select Features
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="algorithm-tab" data-bs-toggle="tab" data-bs-target="#algorithm-tab-pane" type="button" role="tab">
+                                    <i class="bi bi-cpu me-2"></i>
+                                    Algorithm Settings
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced-tab-pane" type="button" role="tab">
+                                    <i class="bi bi-sliders me-2"></i>
+                                    Advanced Options
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="configTabContent">
+                            <!-- Column Selection Tab -->
+                            <div class="tab-pane fade show active" id="columns-tab-pane" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Search Features</label>
+                                            <input type="text" class="form-control" id="column-search" placeholder="Type to search columns...">
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2 mb-3">
+                                            <button class="btn btn-outline-primary btn-sm" id="select-all-btn">
+                                                <i class="bi bi-check-all me-1"></i>Select All
+                                            </button>
+                                            <button class="btn btn-outline-secondary btn-sm" id="clear-all-btn">
+                                                <i class="bi bi-x-circle me-1"></i>Clear All
+                                            </button>
+                                        </div>
+                                        
+                                        <div id="column-list" style="max-height: 400px; overflow-y: auto;">
+                                            <!-- Columns will be loaded here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Selection Summary</h6>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Selected:</span>
+                                                    <span class="fw-bold" id="selected-count">0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Numeric:</span>
+                                                    <span class="fw-bold text-primary" id="numeric-count">0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Categorical:</span>
+                                                    <span class="fw-bold text-success" id="categorical-count">0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Text:</span>
+                                                    <span class="fw-bold text-warning" id="text-count">0</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-3">
+                                            <h6>Selected Features</h6>
+                                            <div id="selected-columns" class="mt-2">
+                                                <div class="text-muted text-center">No features selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Algorithm Settings Tab -->
+                            <div class="tab-pane fade" id="algorithm-tab-pane" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Clustering Algorithm</label>
+                                            <select class="form-select" id="algorithm-select">
+                                                <option value="kmeans">K-Means Clustering</option>
+                                                <option value="dbscan">DBSCAN</option>
+                                                <option value="hierarchical">Hierarchical Clustering</option>
+                                            </select>
+                                            <div class="form-text" id="algorithm-description">
+                                                K-Means groups data into k clusters by minimizing the distance between data points and cluster centers.
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4" id="n-clusters-container">
+                                            <label class="form-label fw-bold">Number of Clusters</label>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <input type="range" class="form-range" id="n-clusters-range" min="2" max="10" value="3">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="number" class="form-control" id="n-clusters-input" min="2" max="20" value="3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4" id="dbscan-params-container" style="display: none;">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Epsilon (eps)</label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="range" class="form-range" id="eps-range" min="0.1" max="2" step="0.1" value="0.5">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="number" class="form-control" id="eps-input" min="0.1" max="5" step="0.1" value="0.5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Min Samples</label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="range" class="form-range" id="min-samples-range" min="2" max="20" value="5">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="number" class="form-control" id="min-samples-input" min="2" max="50" value="5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Visualization Method</label>
+                                            <select class="form-select" id="embedding-method-select">
+                                                <option value="pca">PCA (Principal Component Analysis)</option>
+                                                <option value="tsne">t-SNE</option>
+                                                <option value="umap">UMAP</option>
+                                            </select>
+                                            <div class="form-text" id="embedding-description">
+                                                PCA reduces dimensions while preserving as much variance as possible. Fast but may miss non-linear patterns.
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Sample Size</label>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <input type="range" class="form-range" id="sample-size-range" min="100" max="5000" step="100" value="1000">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="number" class="form-control" id="sample-size-input" min="100" max="10000" step="100" value="1000">
+                                                </div>
+                                            </div>
+                                            <div class="form-text">Limit the number of records for faster processing</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Options Tab -->
+                            <div class="tab-pane fade" id="advanced-tab-pane" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Random Seed</label>
+                                            <input type="number" class="form-control" id="random-seed-input" value="42">
+                                            <div class="form-text">Set a random seed for reproducible results</div>
+                                        </div>
+                                        
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="use-llm-explanation" checked>
+                                            <label class="form-check-label fw-bold" for="use-llm-explanation">
+                                                Generate AI Explanation
+                                            </label>
+                                            <div class="form-text">Use LLM to generate human-readable insights about the clusters</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-outline-secondary" id="prev-tab-btn" disabled>
+                                <i class="bi bi-chevron-left me-2"></i>Previous
+                            </button>
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-outline-primary" id="next-tab-btn">
+                                    Next<i class="bi bi-chevron-right ms-2"></i>
+                                </button>
+                                <button class="btn btn-primary" id="run-clustering-btn" disabled>
+                                    <i class="bi bi-play-circle me-2"></i>Run Clustering Analysis
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row d-none" id="results-section">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-transparent border-0 p-4">
+                        <h3 class="mb-0">
+                            <i class="bi bi-graph-up me-2"></i>
+                            Clustering Results
+                        </h3>
+                        <p class="text-muted mb-0">Explore your data clusters and discover meaningful patterns</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Results Tabs -->
+                        <ul class="nav nav-tabs mb-4" id="resultsTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab">
+                                    <i class="bi bi-eye me-2"></i>Overview
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats-tab-pane" type="button" role="tab">
+                                    <i class="bi bi-bar-chart me-2"></i>Statistics
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="resultsTabContent">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="cluster-visualization" id="cluster-visualization">
+                                            <!-- Visualization will be added here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Analysis Summary</h6>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Algorithm:</span>
+                                                    <span class="fw-bold" id="summary-algorithm">K-Means</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Clusters Found:</span>
+                                                    <span class="fw-bold" id="summary-cluster-count">3</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Sample Size:</span>
+                                                    <span class="fw-bold" id="summary-sample-size">1000</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Features Used:</span>
+                                                    <span class="fw-bold" id="summary-features-count">0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2" id="silhouette-score-container">
+                                                    <span>Silhouette Score:</span>
+                                                    <span class="fw-bold" id="summary-silhouette">N/A</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-3">
+                                            <h6>Cluster Distribution</h6>
+                                            <div id="cluster-distribution">
+                                                <!-- Cluster distribution will be added here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4" id="explanation-section">
+                                    <h5>
+                                        <i class="bi bi-lightbulb me-2"></i>
+                                        AI-Generated Insights
+                                    </h5>
+                                    <div class="card bg-light">
+                                        <div class="card-body" id="explanation-content">
+                                            <!-- AI explanation will be added here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-center gap-3 mt-4">
+                                    <button class="btn btn-outline-primary" id="export-results-btn">
+                                        <i class="bi bi-download me-2"></i>Export Results to Dataset
+                                    </button>
+                                    <button class="btn btn-outline-secondary" id="reconfigure-btn">
+                                        <i class="bi bi-gear me-2"></i>Reconfigure Analysis
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Statistics Tab -->
+                            <div class="tab-pane fade" id="stats-tab-pane" role="tabpanel">
+                                <div class="mb-4">
+                                    <h5>Detailed Cluster Statistics</h5>
+                                    <p class="text-muted">Click on a cluster to expand and see detailed statistics for each feature.</p>
+                                </div>
+                                
+                                <div id="cluster-stats">
+                                    <!-- Cluster statistics will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="instructions-section">
+            <h3>
+                <i class="bi bi-info-circle me-2"></i>
+                Using Embedded ML for Data Matching & Clustering in ETL
+            </h3>
+            
+            <div class="instruction-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Select Relevant Features</div>
+                    <div class="step-description">
+                        Choose columns that are meaningful for your clustering task. For customer segmentation, select demographic and behavioral attributes. For product categorization, include product attributes and metrics. The quality of your clusters depends on selecting relevant features.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instruction-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Choose the Right Algorithm</div>
+                    <div class="step-description">
+                        <strong>K-Means</strong> is best for well-separated, spherical clusters and when you know the number of clusters.
+                        <strong>DBSCAN</strong> excels at finding clusters of arbitrary shapes and identifying outliers.
+                        <strong>Hierarchical Clustering</strong> creates a tree of clusters, useful for exploring different cluster granularities.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instruction-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Interpret the Results</div>
+                    <div class="step-description">
+                        Examine cluster statistics to understand what makes each cluster unique. Look at the AI-generated insights to get a human-readable interpretation of your clusters and their business implications.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instruction-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Apply in ETL Workflows</div>
+                    <div class="step-description">
+                        Export cluster labels back to your dataset to use in downstream ETL processes. Use clustering for data deduplication, customer segmentation, anomaly detection, or creating feature groups for machine learning models.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h5 class="mb-3">Common Use Cases in ETL</h5>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="use-case-card">
+                            <div class="use-case-title">Data Deduplication</div>
+                            <div class="use-case-description">
+                                Identify and merge duplicate records by clustering similar entries. Use similarity search to find potential duplicates and standardize your data.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="use-case-card">
+                            <div class="use-case-title">Customer Segmentation</div>
+                            <div class="use-case-description">
+                                Group customers with similar behaviors or attributes for targeted marketing campaigns, personalized recommendations, or differentiated service levels.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="use-case-card">
+                            <div class="use-case-title">Anomaly Detection</div>
+                            <div class="use-case-description">
+                                Identify outliers or unusual patterns in your data that may indicate errors, fraud, or special cases requiring attention in your ETL pipeline.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="use-case-card">
+                            <div class="use-case-title">Feature Engineering</div>
+                            <div class="use-case-description">
+                                Create new features based on cluster membership to enhance downstream machine learning models or to simplify complex, high-dimensional data.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Application state
+            const state = {
+                sessionId: null,
+                columns: [],
+                selectedColumns: [],
+                clusteringResults: null
+            };
+            
+            // DOM Elements
+            const elements = {
+                // Configuration tabs
+                columnsTab: document.getElementById('columns-tab'),
+                algorithmTab: document.getElementById('algorithm-tab'),
+                advancedTab: document.getElementById('advanced-tab'),
+                
+                // Column selection
+                columnSearch: document.getElementById('column-search'),
+                columnList: document.getElementById('column-list'),
+                selectAllBtn: document.getElementById('select-all-btn'),
+                clearAllBtn: document.getElementById('clear-all-btn'),
+                selectedCount: document.getElementById('selected-count'),
+                numericCount: document.getElementById('numeric-count'),
+                categoricalCount: document.getElementById('categorical-count'),
+                textCount: document.getElementById('text-count'),
+                selectedColumns: document.getElementById('selected-columns'),
+                
+                // Algorithm settings
+                algorithmSelect: document.getElementById('algorithm-select'),
+                algorithmDescription: document.getElementById('algorithm-description'),
+                nClustersContainer: document.getElementById('n-clusters-container'),
+                nClustersRange: document.getElementById('n-clusters-range'),
+                nClustersInput: document.getElementById('n-clusters-input'),
+                dbscanParamsContainer: document.getElementById('dbscan-params-container'),
+                epsRange: document.getElementById('eps-range'),
+                epsInput: document.getElementById('eps-input'),
+                minSamplesRange: document.getElementById('min-samples-range'),
+                minSamplesInput: document.getElementById('min-samples-input'),
+                embeddingMethodSelect: document.getElementById('embedding-method-select'),
+                embeddingDescription: document.getElementById('embedding-description'),
+                sampleSizeRange: document.getElementById('sample-size-range'),
+                sampleSizeInput: document.getElementById('sample-size-input'),
+                randomSeedInput: document.getElementById('random-seed-input'),
+                useLlmExplanation: document.getElementById('use-llm-explanation'),
+                
+                // Navigation buttons
+                prevTabBtn: document.getElementById('prev-tab-btn'),
+                nextTabBtn: document.getElementById('next-tab-btn'),
+                runClusteringBtn: document.getElementById('run-clustering-btn'),
+                
+                // Results section
+                resultsSection: document.getElementById('results-section'),
+                configurationSection: document.getElementById('configuration-section'),
+                
+                // Overview tab
+                clusterVisualization: document.getElementById('cluster-visualization'),
+                summaryAlgorithm: document.getElementById('summary-algorithm'),
+                summaryClusterCount: document.getElementById('summary-cluster-count'),
+                summarySampleSize: document.getElementById('summary-sample-size'),
+                summaryFeaturesCount: document.getElementById('summary-features-count'),
+                summarySilhouette: document.getElementById('summary-silhouette'),
+                silhouetteScoreContainer: document.getElementById('silhouette-score-container'),
+                clusterDistribution: document.getElementById('cluster-distribution'),
+                explanationSection: document.getElementById('explanation-section'),
+                explanationContent: document.getElementById('explanation-content'),
+                exportResultsBtn: document.getElementById('export-results-btn'),
+                reconfigureBtn: document.getElementById('reconfigure-btn'),
+                
+                // Cluster statistics tab
+                clusterStats: document.getElementById('cluster-stats'),
+                
+                // Loading overlay
+                loadingOverlay: document.getElementById('loading-overlay'),
+                
+                // Dataset info
+                datasetName: document.getElementById('dataset-name'),
+                rowCount: document.getElementById('row-count')
+            };
+            
+            // Initialize the application
+            function init() {
+                // Get session ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                state.sessionId = urlParams.get('session_id') || localStorage.getItem('session_id');
+                
+                if (!state.sessionId) {
+                    showError('No session ID provided. Please upload a dataset first.');
+                    return;
+                }
+                
+                // Set up event listeners
+                setupEventListeners();
+                
+                // Load dataset columns
+                loadColumns();
+            }
+            
+            // Set up event listeners
+            function setupEventListeners() {
+                // Column search
+                elements.columnSearch.addEventListener('input', filterColumns);
+                
+                // Select/clear all buttons
+                elements.selectAllBtn.addEventListener('click', selectAllColumns);
+                elements.clearAllBtn.addEventListener('click', clearAllColumns);
+                
+                // Algorithm selection
+                elements.algorithmSelect.addEventListener('change', updateAlgorithmUI);
+                
+                // Number of clusters sync
+                elements.nClustersRange.addEventListener('input', function() {
+                    elements.nClustersInput.value = this.value;
+                });
+                elements.nClustersInput.addEventListener('input', function() {
+                    elements.nClustersRange.value = this.value;
+                });
+                
+                // DBSCAN params sync
+                elements.epsRange.addEventListener('input', function() {
+                    elements.epsInput.value = this.value;
+                });
+                elements.epsInput.addEventListener('input', function() {
+                    elements.epsRange.value = this.value;
+                });
+                elements.minSamplesRange.addEventListener('input', function() {
+                    elements.minSamplesInput.value = this.value;
+                });
+                elements.minSamplesInput.addEventListener('input', function() {
+                    elements.minSamplesRange.value = this.value;
+                });
+                
+                // Sample size sync
+                elements.sampleSizeRange.addEventListener('input', function() {
+                    elements.sampleSizeInput.value = this.value;
+                });
+                elements.sampleSizeInput.addEventListener('input', function() {
+                    elements.sampleSizeRange.value = this.value;
+                });
+                
+                // Embedding method selection
+                elements.embeddingMethodSelect.addEventListener('change', updateEmbeddingDescription);
+                
+                // Tab navigation
+                elements.prevTabBtn.addEventListener('click', navigateToPrevTab);
+                elements.nextTabBtn.addEventListener('click', navigateToNextTab);
+                
+                // Run clustering
+                elements.runClusteringBtn.addEventListener('click', runClustering);
+                
+                // Results actions
+                elements.exportResultsBtn.addEventListener('click', exportResults);
+                elements.reconfigureBtn.addEventListener('click', reconfigureAnalysis);
+            }
+            
+            // Load columns from the dataset
+            function loadColumns() {
+                showLoading(true);
+                
+                fetch('/api/clustering/get-columns', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session_id: state.sessionId
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Failed to load columns'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    state.columns = data.columns;
+                    
+                    // Update dataset info
+                    elements.datasetName.textContent = localStorage.getItem('dataset_name') || 'Dataset';
+                    elements.rowCount.textContent = data.row_count + ' rows';
+                    
+                    // Render columns
+                    renderColumns();
+                    
+                    showLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error loading columns:', error);
+                    showError('Error loading columns: ' + error.message);
+                    showLoading(false);
+                });
+            }
+            
+            // Render columns in the column list
+            function renderColumns() {
+                elements.columnList.innerHTML = '';
+                
+                if (state.columns.length === 0) {
+                    elements.columnList.innerHTML = '<div class="text-center py-4 text-muted">No columns found</div>';
+                    return;
+                }
+                
+                state.columns.forEach(column => {
+                    const columnItem = document.createElement('div');
+                    columnItem.className = 'column-item';
+                    columnItem.dataset.column = column.name;
+                    
+                    let typeIcon = 'bi-123';
+                    let typeBadge = 'Numeric';
+                    
+                    if (column.is_categorical) {
+                        typeIcon = 'bi-tag';
+                        typeBadge = 'Categorical';
+                    } else if (column.is_text) {
+                        typeIcon = 'bi-fonts';
+                        typeBadge = 'Text';
+                    } else if (column.is_datetime) {
+                        typeIcon = 'bi-calendar';
+                        typeBadge = 'DateTime';
+                    }
+                    
+                    columnItem.innerHTML = `
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="${column.name}" id="column-${column.name}">
+                        </div>
+                        <div class="column-info">
+                            <div class="column-name">${column.name}</div>
+                            <div class="column-type"><i class="bi ${typeIcon} me-1"></i>${typeBadge}</div>
+                        </div>
+                        <div class="column-badge">${column.unique_values} unique</div>
+                    `;
+                    
+                    const checkbox = columnItem.querySelector('input[type="checkbox"]');
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            addSelectedColumn(column);
+                        } else {
+                            removeSelectedColumn(column.name);
+                        }
+                        updateColumnSummary();
+                    });
+                    
+                    columnItem.addEventListener('click', function(e) {
+                        if (e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            checkbox.dispatchEvent(new Event('change'));
+                        }
+                    });
+                    
+                    elements.columnList.appendChild(columnItem);
+                });
+            }
+            
+            // Filter columns based on search input
+            function filterColumns() {
+                const searchTerm = elements.columnSearch.value.toLowerCase();
+                
+                const columnItems = elements.columnList.querySelectorAll('.column-item');
+                columnItems.forEach(item => {
+                    const columnName = item.dataset.column.toLowerCase();
+                    if (columnName.includes(searchTerm)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add a column to the selected columns
+            function addSelectedColumn(column) {
+                if (!state.selectedColumns.find(c => c.name === column.name)) {
+                    state.selectedColumns.push(column);
+                    updateSelectedColumnsUI();
+                }
+            }
+            
+            // Remove a column from the selected columns
+            function removeSelectedColumn(columnName) {
+                state.selectedColumns = state.selectedColumns.filter(c => c.name !== columnName);
+                updateSelectedColumnsUI();
+            }
+            
+            // Update the selected columns UI
+            function updateSelectedColumnsUI() {
+                if (state.selectedColumns.length === 0) {
+                    elements.selectedColumns.innerHTML = '<div class="text-muted text-center">No features selected</div>';
+                } else {
+                    elements.selectedColumns.innerHTML = '';
+                    
+                    state.selectedColumns.forEach(column => {
+                        const badge = document.createElement('span');
+                        badge.className = 'badge bg-primary me-2 mb-2';
+                        badge.style.padding = '8px 12px';
+                        badge.style.fontSize = '0.9rem';
+                        
+                        let typeIcon = 'bi-123';
+                        if (column.is_categorical) {
+                            typeIcon = 'bi-tag';
+                        } else if (column.is_text) {
+                            typeIcon = 'bi-fonts';
+                        } else if (column.is_datetime) {
+                            typeIcon = 'bi-calendar';
+                        }
+                        
+                        badge.innerHTML = `
+                            <i class="bi ${typeIcon} me-1"></i>
+                            ${column.name}
+                            <i class="bi bi-x-circle ms-2" style="cursor: pointer;"></i>
+                        `;
+                        
+                        const removeIcon = badge.querySelector('.bi-x-circle');
+                        removeIcon.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            removeSelectedColumn(column.name);
+                            
+                            // Uncheck the corresponding checkbox
+                            const checkbox = document.querySelector(`#column-${column.name}`);
+                            if (checkbox) {
+                                checkbox.checked = false;
+                            }
+                        });
+                        
+                        elements.selectedColumns.appendChild(badge);
+                    });
+                }
+                
+                updateColumnSummary();
+            }
+            
+            // Update the column selection summary
+            function updateColumnSummary() {
+                elements.selectedCount.textContent = state.selectedColumns.length;
+                elements.numericCount.textContent = state.selectedColumns.filter(c => c.is_numeric).length;
+                elements.categoricalCount.textContent = state.selectedColumns.filter(c => c.is_categorical).length;
+                elements.textCount.textContent = state.selectedColumns.filter(c => c.is_text).length;
+                
+                // Enable/disable the run button based on selection
+                elements.runClusteringBtn.disabled = state.selectedColumns.length === 0;
+            }
+            
+            // Select all columns
+            function selectAllColumns() {
+                const checkboxes = elements.columnList.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    if (!checkbox.checked) {
+                        checkbox.checked = true;
+                        const columnName = checkbox.value;
+                        const column = state.columns.find(c => c.name === columnName);
+                        if (column) {
+                            addSelectedColumn(column);
+                        }
+                    }
+                });
+                updateColumnSummary();
+            }
+            
+            // Clear all selected columns
+            function clearAllColumns() {
+                const checkboxes = elements.columnList.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                state.selectedColumns = [];
+                updateSelectedColumnsUI();
+            }
+            
+            // Update the algorithm UI based on selection
+            function updateAlgorithmUI() {
+                const algorithm = elements.algorithmSelect.value;
+                
+                // Update algorithm description
+                if (algorithm === 'kmeans') {
+                    elements.algorithmDescription.textContent = 'K-Means groups data into k clusters by minimizing the distance between data points and cluster centers.';
+                    elements.nClustersContainer.style.display = '';
+                    elements.dbscanParamsContainer.style.display = 'none';
+                } else if (algorithm === 'dbscan') {
+                    elements.algorithmDescription.textContent = 'DBSCAN finds clusters of arbitrary shape and identifies outliers as noise.';
+                    elements.nClustersContainer.style.display = 'none';
+                    elements.dbscanParamsContainer.style.display = '';
+                } else if (algorithm === 'hierarchical') {
+                    elements.algorithmDescription.textContent = 'Hierarchical clustering builds a tree of clusters, allowing exploration at different levels of granularity.';
+                    elements.nClustersContainer.style.display = '';
+                    elements.dbscanParamsContainer.style.display = 'none';
+                }
+            }
+            
+            // Update embedding method description
+            function updateEmbeddingDescription() {
+                const method = elements.embeddingMethodSelect.value;
+                
+                if (method === 'pca') {
+                    elements.embeddingDescription.textContent = 'PCA reduces dimensions while preserving as much variance as possible. Fast but may miss non-linear patterns.';
+                } else if (method === 'tsne') {
+                    elements.embeddingDescription.textContent = 't-SNE preserves local structure, revealing clusters and patterns. Slower but better for visualization.';
+                } else if (method === 'umap') {
+                    elements.embeddingDescription.textContent = 'UMAP balances local and global structure preservation. Fast and effective for most datasets.';
+                }
+            }
+            
+            // Navigate to the previous tab
+            function navigateToPrevTab() {
+                const activeTab = document.querySelector('#configTabs .nav-link.active');
+                const activeTabId = activeTab.id;
+                
+                if (activeTabId === 'algorithm-tab') {
+                    elements.columnsTab.click();
+                    elements.prevTabBtn.disabled = true;
+                    elements.nextTabBtn.disabled = false;
+                } else if (activeTabId === 'advanced-tab') {
+                    elements.algorithmTab.click();
+                    elements.prevTabBtn.disabled = false;
+                    elements.nextTabBtn.disabled = false;
+                }
+            }
+            
+            // Navigate to the next tab
+            function navigateToNextTab() {
+                const activeTab = document.querySelector('#configTabs .nav-link.active');
+                const activeTabId = activeTab.id;
+                
+                if (activeTabId === 'columns-tab') {
+                    elements.algorithmTab.click();
+                    elements.prevTabBtn.disabled = false;
+                    elements.nextTabBtn.disabled = false;
+                } else if (activeTabId === 'algorithm-tab') {
+                    elements.advancedTab.click();
+                    elements.prevTabBtn.disabled = false;
+                    elements.nextTabBtn.disabled = true;
+                }
+            }
+            
+            // Run clustering analysis
+            function runClustering() {
+                if (state.selectedColumns.length === 0) {
+                    showError('Please select at least one column for clustering.');
+                    return;
+                }
+                
+                showLoading(true);
+                
+                // Get selected columns
+                const selectedColumnNames = state.selectedColumns.map(c => c.name);
+                
+                // Get algorithm settings
+                const algorithm = elements.algorithmSelect.value;
+                let nClusters = parseInt(elements.nClustersInput.value);
+                const eps = parseFloat(elements.epsInput.value);
+                const minSamples = parseInt(elements.minSamplesInput.value);
+                const embeddingMethod = elements.embeddingMethodSelect.value;
+                const sampleSize = parseInt(elements.sampleSizeInput.value);
+                
+                // Validate inputs
+                if (algorithm !== 'dbscan' && (isNaN(nClusters) || nClusters < 2)) {
+                    showError('Please enter a valid number of clusters (at least 2).');
+                    showLoading(false);
+                    return;
+                }
+                
+                // Prepare request data
+                const requestData = {
+                    session_id: state.sessionId,
+                    columns: selectedColumnNames,
+                    algorithm: algorithm,
+                    embedding_method: embeddingMethod,
+                    sample_size: sampleSize
+                };
+                
+                if (algorithm !== 'dbscan') {
+                    requestData.n_clusters = nClusters;
+                } else {
+                    requestData.eps = eps;
+                    requestData.min_samples = minSamples;
+                }
+                
+                // Send request to server
+                fetch('/api/clustering/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Clustering analysis failed'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Store results
+                    state.clusteringResults = data;
+                    
+                    // Update UI
+                    updateResultsUI();
+                    
+                    // Show results section
+                    elements.configurationSection.style.display = 'none';
+                    elements.resultsSection.classList.remove('d-none');
+                    
+                    showLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error running clustering:', error);
+                    showError('Error running clustering: ' + error.message);
+                    showLoading(false);
+                });
+            }
+            
+            // Update the results UI
+            function updateResultsUI() {
+                const results = state.clusteringResults;
+                
+                if (!results) {
+                    return;
+                }
+                
+                // Update overview tab
+                updateOverviewTab();
+                
+                // Update cluster statistics tab
+                updateClusterStatsTab();
+            }
+            
+            // Update the overview tab
+            function updateOverviewTab() {
+                const results = state.clusteringResults;
+                
+                // Update summary
+                elements.summaryAlgorithm.textContent = elements.algorithmSelect.options[elements.algorithmSelect.selectedIndex].text;
+                elements.summaryClusterCount.textContent = results.cluster_count;
+                elements.summarySampleSize.textContent = results.sample_size;
+                elements.summaryFeaturesCount.textContent = state.selectedColumns.length;
+                
+                // Update silhouette score
+                if (results.silhouette_score !== null) {
+                    elements.summarySilhouette.textContent = results.silhouette_score.toFixed(3);
+                    elements.silhouetteScoreContainer.style.display = '';
+                } else {
+                    elements.silhouetteScoreContainer.style.display = 'none';
+                }
+                
+                // Update cluster visualization
+                elements.clusterVisualization.innerHTML = `
+                    <img src="data:image/png;base64,${results.plot}" alt="Cluster Visualization" class="img-fluid">
+                `;
+                
+                // Update cluster distribution
+                updateClusterDistribution();
+                
+                // Update explanation
+                if (results.explanation) {
+                    elements.explanationContent.innerHTML = results.explanation;
+                    elements.explanationSection.style.display = '';
+                } else {
+                    elements.explanationSection.style.display = 'none';
+                }
+            }
+            
+            // Update cluster distribution
+            function updateClusterDistribution() {
+                const results = state.clusteringResults;
+                
+                if (!results || !results.cluster_stats) {
+                    return;
+                }
+                
+                elements.clusterDistribution.innerHTML = '';
+                
+                results.cluster_stats.forEach(cluster => {
+                    const percentage = cluster.percentage;
+                    const color = getClusterColor(cluster.cluster_id);
+                    
+                    const distributionItem = document.createElement('div');
+                    distributionItem.className = 'mb-3';
+                    distributionItem.innerHTML = `
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Cluster ${cluster.cluster_id}</span>
+                            <span>${percentage}% (${cluster.size} records)</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="width: ${percentage}%; background: ${color};" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    `;
+                    
+                    elements.clusterDistribution.appendChild(distributionItem);
+                });
+            }
+            
+            // Update cluster statistics tab
+            function updateClusterStatsTab() {
+                const results = state.clusteringResults;
+                
+                if (!results || !results.cluster_stats) {
+                    return;
+                }
+                
+                elements.clusterStats.innerHTML = '';
+                
+                results.cluster_stats.forEach(cluster => {
+                    const clusterCard = document.createElement('div');
+                    clusterCard.className = 'card mb-3';
+                    
+                    const color = getClusterColor(cluster.cluster_id);
+                    
+                    clusterCard.innerHTML = `
+                        <div class="card-header" style="border-left: 4px solid ${color};">
+                            <h6 class="mb-0">
+                                Cluster ${cluster.cluster_id} 
+                                <span class="badge bg-light text-dark ms-2">${cluster.size} records (${cluster.percentage}%)</span>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                ${Object.entries(cluster.features).map(([feature, stats]) => {
+                                    const column = state.columns.find(c => c.name === feature);
+                                    const isNumeric = column && column.is_numeric;
+                                    
+                                    if (isNumeric) {
+                                        return `
+                                            <div class="col-md-6 mb-3">
+                                                <h6>${feature}</h6>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <small class="text-muted">Mean:</small><br>
+                                                        <strong>${stats.mean}</strong>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <small class="text-muted">Std Dev:</small><br>
+                                                        <strong>${stats.std}</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6">
+                                                        <small class="text-muted">Min:</small><br>
+                                                        <strong>${stats.min}</strong>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <small class="text-muted">Max:</small><br>
+                                                        <strong>${stats.max}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    } else {
+                                        return `
+                                            <div class="col-md-6 mb-3">
+                                                <h6>${feature}</h6>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <small class="text-muted">Most Common:</small><br>
+                                                        <strong>${stats.top_value}</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <small class="text-muted">Frequency:</small><br>
+                                                        <strong>${stats.top_count} (${stats.top_percentage}%)</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                    
+                    elements.clusterStats.appendChild(clusterCard);
+                });
+            }
+            
+            // Export clustering results back to the dataset
+            function exportResults() {
+                showLoading(true);
+                
+                // Get selected columns
+                const selectedColumnNames = state.selectedColumns.map(c => c.name);
+                
+                // Get algorithm settings
+                const algorithm = elements.algorithmSelect.value;
+                const nClusters = parseInt(elements.nClustersInput.value);
+                
+                // Prepare request data
+                const requestData = {
+                    session_id: state.sessionId,
+                    columns: selectedColumnNames,
+                    algorithm: algorithm,
+                    n_clusters: nClusters
+                };
+                
+                // Send request to server
+                fetch('/api/clustering/export-results', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Export failed'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showSuccess(`Clustering results exported successfully. A new column "${data.column_name}" has been added to your dataset.`);
+                    showLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error exporting results:', error);
+                    showError('Error exporting results: ' + error.message);
+                    showLoading(false);
+                });
+            }
+            
+            // Reconfigure analysis
+            function reconfigureAnalysis() {
+                elements.configurationSection.style.display = '';
+                elements.resultsSection.classList.add('d-none');
+            }
+            
+            // Show/hide loading overlay
+            function showLoading(show) {
+                elements.loadingOverlay.style.display = show ? 'flex' : 'none';
+            }
+            
+            // Show error message
+            function showError(message) {
+                alert('Error: ' + message);
+            }
+            
+            // Show success message
+            function showSuccess(message) {
+                alert('Success: ' + message);
+            }
+            
+            // Get color for a cluster
+            function getClusterColor(clusterId) {
+                // Define a color palette
+                const colors = [
+                    '#3366FF', '#FF3366', '#33FF66', '#FF9933', '#9933FF',
+                    '#33FFFF', '#FF33FF', '#FFFF33', '#3399FF', '#FF3399'
+                ];
+                
+                // Use modulo to cycle through colors
+                return colors[clusterId % colors.length];
+            }
+            
+            // Initialize the application
+            init();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code-Free Modeling | Enterprise Data Analysis Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3366FF;
+            --primary-light: #EBF0FF;
+            --primary-dark: #1939B7;
+            --secondary-color: #6366F1;
+            --accent-color: #8B5CF6;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --dark-color: #1E293B;
+            --light-color: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            --gradient-primary: linear-gradient(135deg, #3366FF 0%, #6366F1 50%, #8B5CF6 100%);
+            --gradient-secondary: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+            --sidebar-width: 280px;
+            --header-height: 72px;
+            --step-indicator-size: 36px;
+            --step-line-height: 3px;
+            --border-radius-sm: 6px;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --box-shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F8FAFC;
+            color: var(--dark-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            height: var(--header-height);
+            z-index: 1030;
+            border-bottom: 1px solid rgba(51, 102, 255, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand img {
+            height: 32px;
+            margin-right: 12px;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: var(--sidebar-width);
+            overflow-y: auto;
+            transition: var(--transition-base);
+            z-index: 1020;
+            padding: 24px 0;
+            border-right: 1px solid rgba(51, 102, 255, 0.1);
+        }
+        
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+        
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 12px 20px;
+            margin: 4px 16px;
+            border-radius: var(--border-radius);
+            transition: var(--transition-base);
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link:hover {
+            background: linear-gradient(135deg, rgba(51, 102, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            color: var(--primary-color);
+            transform: translateX(4px);
+        }
+        
+        .nav-link.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(51, 102, 255, 0.3);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            transition: var(--transition-base);
+            min-height: calc(100vh - var(--header-height));
+        }
+        
+        .main-content.expanded {
+            margin-left: 0;
+        }
+        
+        /* Step Indicator Styles */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: calc(var(--step-indicator-size) / 2);
+            left: 0;
+            right: 0;
+            height: var(--step-line-height);
+            background-color: var(--gray-200);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: var(--step-indicator-size);
+            height: var(--step-indicator-size);
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            transition: var(--transition-base);
+        }
+        
+        .step.active .step-circle {
+            background: var(--gradient-primary);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(51, 102, 255, 0.2);
+        }
+        
+        .step.completed .step-circle {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-top: 8px;
+            text-align: center;
+            max-width: 120px;
+        }
+        
+        .step.active .step-title {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .step.completed .step-title {
+            color: var(--success-color);
+        }
+        
+        .step-progress {
+            position: absolute;
+            top: calc(var(--step-indicator-size) / 2);
+            left: 0;
+            height: var(--step-line-height);
+            background: var(--gradient-primary);
+            transform: translateY(-50%);
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+        
+        /* Card Styles */
+        .app-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition-base);
+        }
+        
+        .app-card:hover {
+            box-shadow: var(--box-shadow-lg);
+            transform: translateY(-2px);
+        }
+        
+        .app-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 16px;
+        }
+        
+        .app-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .app-card-title i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            box-shadow: 0 4px 10px rgba(51, 102, 255, 0.2);
+            font-weight: 600;
+            transition: var(--transition-base);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(51, 102, 255, 0.3);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            background: transparent;
+            transition: var(--transition-base);
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            border: none;
+            box-shadow: 0 4px 10px rgba(30, 41, 59, 0.2);
+            font-weight: 600;
+            transition: var(--transition-base);
+        }
+        
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-icon i {
+            margin-right: 8px;
+        }
+        
+        /* Form Styles */
+        .form-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            font-size: 1rem;
+            transition: var(--transition-base);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.2);
+        }
+        
+        /* Table Styles */
+        .table-responsive {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            background-color: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 2px solid var(--gray-200);
+            padding: 12px 16px;
+        }
+        
+        .table tbody td {
+            padding: 12px 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        /* Badge Styles */
+        .badge {
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+        
+        .badge-primary {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        /* Alert Styles */
+        .alert {
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .alert-primary {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .alert-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        /* Progress Bar Styles */
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background-color: var(--gray-200);
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+        
+        /* Card Selection Styles */
+        .selection-card {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            position: relative;
+        }
+        
+        .selection-card:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .selection-card.selected {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.2);
+        }
+        
+        .selection-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .selection-card-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        .selection-card-body {
+            color: var(--gray-600);
+        }
+        
+        .selection-card-check {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-base);
+        }
+        
+        .selection-card.selected .selection-card-check {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Feature Selection Styles */
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 8px;
+            transition: var(--transition-base);
+        }
+        
+        .feature-item:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .feature-item-info {
+            flex: 1;
+            margin-left: 12px;
+        }
+        
+        .feature-item-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        .feature-item-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .feature-item-badge {
+            margin-left: 8px;
+        }
+        
+        /* Model Card Styles */
+        .model-card {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition-base);
+            cursor: pointer;
+        }
+        
+        .model-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .model-card.selected {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.2);
+        }
+        
+        .model-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .model-card-title {
+            font-weight: 700;
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .model-card-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .model-card-body {
+            color: var(--gray-600);
+        }
+        
+        .model-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        /* Slider Styles */
+        .slider-container {
+            margin-bottom: 24px;
+        }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .slider-label {
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .slider-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gray-200);
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 4px rgba(51, 102, 255, 0.2);
+        }
+        
+        /* Results Section Styles */
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-sm);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            height: 100%;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 8px 0;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-description {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-top: 8px;
+        }
+        
+        /* Chart Container Styles */
+        .chart-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-sm);
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+            height: 100%;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .chart-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 32px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary-color);
+        }
+        
+        .loading-text {
+            margin-top: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .loading-subtext {
+            margin-top: 8px;
+            color: var(--gray-600);
+            text-align: center;
+        }
+        
+        /* Summary Section Styles */
+        .summary-section {
+            background-color: var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .summary-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+        
+        .summary-item {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            width: 180px;
+            flex-shrink: 0;
+        }
+        
+        .summary-value {
+            color: var(--gray-800);
+        }
+        
+        /* Feature Importance Styles */
+        .feature-importance-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .feature-importance-bar-container {
+            flex: 1;
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 12px;
+        }
+        
+        .feature-importance-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+        
+        .feature-importance-value {
+            font-weight: 600;
+            color: var(--primary-color);
+            width: 60px;
+            text-align: right;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .step-title {
+                font-size: 12px;
+                max-width: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .step-indicator {
+                overflow-x: auto;
+                padding-bottom: 16px;
+            }
+            
+            .step {
+                min-width: 100px;
+            }
+            
+            .app-card {
+                padding: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 16px;
+            }
+            
+            .step-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+            
+            .step-title {
+                font-size: 10px;
+                max-width: 60px;
+            }
+        }
+        
+        /* Dataset Chip */
+        .dataset-chip {
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .dataset-chip i {
+            margin-right: 6px;
+        }
+        
+        /* Step Content */
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        /* Insight Card */
+        .insight-card {
+            border-left: 4px solid var(--primary-color);
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .insight-card.high {
+            border-left-color: var(--danger-color);
+        }
+        
+        .insight-card.medium {
+            border-left-color: var(--warning-color);
+        }
+        
+        .insight-card.low {
+            border-left-color: var(--success-color);
+        }
+        
+        .insight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        .insight-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+        }
+        
+        .insight-body {
+            color: var(--gray-600);
+        }
+        
+        /* Deployment Card */
+        .deployment-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .deployment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .deployment-title {
+            font-weight: 700;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        .deployment-body {
+            margin-bottom: 16px;
+        }
+        
+        .deployment-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .api-endpoint {
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            font-family: monospace;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+        
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        
+        .toast {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            padding: 16px;
+            margin-bottom: 12px;
+            min-width: 300px;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid var(--primary-color);
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        
+        .toast.success {
+            border-left-color: var(--success-color);
+        }
+        
+        .toast.error {
+            border-left-color: var(--danger-color);
+        }
+        
+        .toast.warning {
+            border-left-color: var(--warning-color);
+        }
+        
+        .toast-icon {
+            margin-right: 12px;
+            font-size: 1.25rem;
+        }
+        
+        .toast-content {
+            flex: 1;
+        }
+        
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .toast-message {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+            font-size: 1.25rem;
+            padding: 0;
+            margin-left: 12px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .slide-out {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <button id="sidebar-toggle" class="btn btn-link me-3 d-lg-none">
+                <i class="bi bi-list" style="font-size: 1.5rem;"></i>
+            </button>
+            <a class="navbar-brand" href="#">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                    <path d="M8 12h16v8H8z" fill="white" opacity="0.9"/>
+                    <path d="M12 8h8v16h-8z" fill="white" opacity="0.7"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#3366FF"/>
+                            <stop offset="50%" style="stop-color:#6366F1"/>
+                            <stop offset="100%" style="stop-color:#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                Enterprise Analytics
+            </a>
+            <div class="d-flex align-items-center ms-auto">
+                <div id="dataset-chip" class="dataset-chip me-3 d-none">
+                    <i class="bi bi-table"></i>
+                    <span id="dataset-name">No dataset loaded</span>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        User
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="px-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0" style="color: var(--dark-color); font-weight: 700;">Navigation</h5>
+                <button class="btn btn-sm btn-outline-secondary d-lg-none" id="collapse-sidebar">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+            </div>
+            
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-house-door"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-clipboard-data"></i>
+                        Data Profiling
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <i class="bi bi-robot"></i>
+                        Code-Free Modeling
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-code-square"></i>
+                        Code Generation
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-chat-left-text"></i>
+                        NLP Tools
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-diagram-3"></i>
+                        LLM Mesh Analysis
+                    </a>
+                </li>
+            </ul>
+            
+            <hr class="my-4" style="border-color: rgba(51, 102, 255, 0.2);">
+            
+            <h6 class="mb-3" style="color: var(--dark-color); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Recent Projects</h6>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action border-0 py-2">
+                    <i class="bi bi-file-earmark-text me-2" style="color: var(--primary-color);"></i>
+                    Customer Analysis
+                </a>
+                <a href="#" class="list-group-item list-group-item-action border-0 py-2">
+                    <i class="bi bi-file-earmark-text me-2" style="color: var(--primary-color);"></i>
+                    Sales Forecast
+                </a>
+                <a href="#" class="list-group-item list-group-item-action border-0 py-2">
+                    <i class="bi bi-file-earmark-text me-2" style="color: var(--primary-color);"></i>
+                    Sentiment Analysis
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="container-fluid">
+            <!-- Page Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-1 fw-bold">Code-Free Modeling</h1>
+                    <p class="text-muted">Build machine learning models without writing code</p>
+                </div>
+                <div>
+                    <button id="start-new-btn" class="btn btn-outline-primary me-2">
+                        <i class="bi bi-plus-circle me-1"></i> New Model
+                    </button>
+                    <button id="help-btn" class="btn btn-outline-secondary">
+                        <i class="bi bi-question-circle me-1"></i> Help
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step Indicator -->
+            <div class="step-indicator mb-4" id="step-indicator">
+                <div class="step-progress" id="step-progress" style="width: 0%;"></div>
+                <div class="step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-title">Dataset Preview</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-title">Target Selection</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-title">Feature Selection</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-title">Model Selection</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-title">Model Configuration</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-circle">6</div>
+                    <div class="step-title">Results & Evaluation</div>
+                </div>
+            </div>
+            
+            <!-- Step Content Container -->
+            <div id="step-content">
+                <!-- Step 1: Dataset Preview -->
+                <div id="step-1-content" class="step-content active">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-table"></i> Dataset Preview
+                            </h2>
+                            <div>
+                                <button id="refresh-dataset-btn" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Review your dataset to understand its structure before proceeding with modeling.
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-muted mb-2">Rows</h5>
+                                            <h2 class="mb-0" id="dataset-rows">0</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-muted mb-2">Columns</h5>
+                                            <h2 class="mb-0" id="dataset-columns">0</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-muted mb-2">Missing Values</h5>
+                                            <h2 class="mb-0" id="dataset-missing">0%</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-muted mb-2">Data Types</h5>
+                                            <h2 class="mb-0" id="dataset-types">-</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="dataset-preview-table">
+                                    <thead>
+                                        <tr id="dataset-preview-header">
+                                            <!-- Headers will be inserted here -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dataset-preview-body">
+                                        <!-- Data rows will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h5 class="mb-3">Column Information</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-sm" id="column-info-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Column Name</th>
+                                                <th>Type</th>
+                                                <th>Missing</th>
+                                                <th>Unique Values</th>
+                                                <th>Sample Values</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="column-info-body">
+                                            <!-- Column info will be inserted here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-outline-secondary" disabled>
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="step-1-next" class="btn btn-primary">
+                            Next <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Target Selection -->
+                <div id="step-2-content" class="step-content">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-bullseye"></i> Target Variable Selection
+                            </h2>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Select the target variable you want to predict. This will determine whether we perform classification or regression.
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="target-variable-select" class="form-label">Target Variable</label>
+                                <select class="form-select" id="target-variable-select">
+                                    <option value="" selected disabled>Select a target variable</option>
+                                    <!-- Options will be inserted here -->
+                                </select>
+                                <div class="form-text mt-2">
+                                    The target variable is what your model will learn to predict.
+                                </div>
+                            </div>
+                            
+                            <div id="target-preview-container" class="mt-4 d-none">
+                                <h5 class="mb-3">Target Variable Preview</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Statistics</h6>
+                                                <table class="table table-sm" id="target-stats-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Type</th>
+                                                            <td id="target-type">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Problem Type</th>
+                                                            <td id="problem-type">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Unique Values</th>
+                                                            <td id="target-unique">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Missing Values</th>
+                                                            <td id="target-missing">-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Distribution</h6>
+                                                <div id="target-distribution-chart" style="height: 200px;">
+                                                    <!-- Chart will be inserted here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button id="step-2-prev" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="step-2-next" class="btn btn-primary" disabled>
+                            Next <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Feature Selection -->
+                <div id="step-3-content" class="step-content">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-list-check"></i> Feature Selection
+                            </h2>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Select the features (input variables) to use for training your model.
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control" id="feature-search" placeholder="Search features...">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <button id="select-all-features" class="btn btn-outline-primary me-2">
+                                        <i class="bi bi-check-all me-1"></i> Select All
+                                    </button>
+                                    <button id="clear-all-features" class="btn btn-outline-secondary">
+                                        <i class="bi bi-x-lg me-1"></i> Clear All
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-0">Available Features</h6>
+                                                <span id="selected-count" class="badge bg-primary">0 selected</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                                            <div id="feature-list">
+                                                <!-- Features will be inserted here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Feature Recommendations</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="feature-recommendations">
+                                                <div class="alert alert-warning">
+                                                    <i class="bi bi-lightbulb me-2"></i>
+                                                    <strong>Tip:</strong> Select features that are likely to be predictive of your target variable.
+                                                </div>
+                                                <ul class="list-group list-group-flush" id="recommendation-list">
+                                                    <li class="list-group-item">
+                                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                        Avoid features with too many missing values
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                        Exclude ID columns and unique identifiers
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                        Consider correlation with target variable
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="auto-feature-engineering">
+                                    <label class="form-check-label" for="auto-feature-engineering">
+                                        Enable automatic feature engineering
+                                    </label>
+                                </div>
+                                <div class="form-text">
+                                    Automatically create new features from existing ones to improve model performance.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button id="step-3-prev" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="step-3-next" class="btn btn-primary" disabled>
+                            Next <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Model Selection -->
+                <div id="step-4-content" class="step-content">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-cpu"></i> Model Selection
+                            </h2>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Choose a modeling approach and select the algorithm that best fits your needs.
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5 class="mb-3">Modeling Approach</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="selection-card" data-approach="automl">
+                                            <div class="selection-card-header">
+                                                <h5 class="selection-card-title">AutoML</h5>
+                                                <span class="badge badge-primary">Recommended</span>
+                                            </div>
+                                            <div class="selection-card-body">
+                                                <p>Automatically selects and tunes the best model for your data.</p>
+                                            </div>
+                                            <div class="selection-card-check">
+                                                <i class="bi bi-check"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="selection-card" data-approach="classification" id="classification-approach">
+                                            <div class="selection-card-header">
+                                                <h5 class="selection-card-title">Classification</h5>
+                                            </div>
+                                            <div class="selection-card-body">
+                                                <p>Predict categorical outcomes or classes.</p>
+                                            </div>
+                                            <div class="selection-card-check">
+                                                <i class="bi bi-check"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="selection-card" data-approach="regression" id="regression-approach">
+                                            <div class="selection-card-header">
+                                                <h5 class="selection-card-title">Regression</h5>
+                                            </div>
+                                            <div class="selection-card-body">
+                                                <p>Predict continuous numerical values.</p>
+                                            </div>
+                                            <div class="selection-card-check">
+                                                <i class="bi bi-check"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="model-selection-container" class="mt-4">
+                                <h5 class="mb-3">Select Model</h5>
+                                <div class="row" id="model-cards-container">
+                                    <!-- Model cards will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <div id="selected-model-info" class="mt-4 d-none">
+                                <h5 class="mb-3">Selected Model Information</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 id="selected-model-name" class="card-title">Model Name</h6>
+                                        <p id="selected-model-description" class="card-text">Model description will appear here.</p>
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <span class="fw-bold">Strengths:</span>
+                                                    <ul id="selected-model-strengths" class="mt-2">
+                                                        <!-- Strengths will be inserted here -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <span class="fw-bold">Limitations:</span>
+                                                    <ul id="selected-model-limitations" class="mt-2">
+                                                        <!-- Limitations will be inserted here -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <span class="fw-bold">Best For:</span>
+                                                    <ul id="selected-model-best-for" class="mt-2">
+                                                        <!-- Best for will be inserted here -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button id="step-4-prev" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="step-4-next" class="btn btn-primary" disabled>
+                            Next <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Model Configuration -->
+                <div id="step-5-content" class="step-content">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-sliders"></i> Model Configuration
+                            </h2>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Configure your model parameters to optimize performance.
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Training Settings</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="test-size" class="form-label">Test Size</label>
+                                                <div class="slider-container">
+                                                    <div class="slider-header">
+                                                        <span class="slider-label">Percentage of data used for testing</span>
+                                                        <span class="slider-value" id="test-size-value">20%</span>
+                                                    </div>
+                                                    <input type="range" class="slider" id="test-size" min="10" max="40" value="20">
+                                                    <div class="d-flex justify-content-between mt-1">
+                                                        <small>10%</small>
+                                                        <small>40%</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                                                                        <div class="mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="cross-validation">
+                                                    <label class="form-check-label" for="cross-validation">
+                                                        Enable cross-validation
+                                                    </label>
+                                                </div>
+                                                <div class="form-text">
+                                                    Improves model evaluation reliability but increases training time.
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="hyperparameter-tuning">
+                                                    <label class="form-check-label" for="hyperparameter-tuning">
+                                                        Enable hyperparameter tuning
+                                                    </label>
+                                                </div>
+                                                <div class="form-text">
+                                                    Automatically find the best parameters for your model.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Model Parameters</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="model-parameters">
+                                                <!-- Model parameters will be inserted here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0">Advanced Options</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="feature-selection">
+                                                    <label class="form-check-label" for="feature-selection">
+                                                        Enable feature selection
+                                                    </label>
+                                                </div>
+                                                <div class="form-text">
+                                                    Automatically select the most important features.
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="handle-imbalance">
+                                                    <label class="form-check-label" for="handle-imbalance">
+                                                        Handle class imbalance
+                                                    </label>
+                                                </div>
+                                                <div class="form-text">
+                                                    Apply techniques to handle imbalanced target classes.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="random-state" class="form-label">Random Seed</label>
+                                                <input type="number" class="form-control" id="random-state" value="42">
+                                                <div class="form-text">
+                                                    Set a seed for reproducible results.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button id="step-5-prev" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="step-5-next" class="btn btn-primary">
+                            Train Model <i class="bi bi-lightning-charge ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 6: Results & Evaluation -->
+                <div id="step-6-content" class="step-content">
+                    <div class="app-card">
+                        <div class="app-card-header">
+                            <h2 class="app-card-title">
+                                <i class="bi bi-graph-up"></i> Model Results & Evaluation
+                            </h2>
+                            <div>
+                                <button id="download-results-btn" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-download me-1"></i> Download Results
+                                </button>
+                            </div>
+                        </div>
+                        <div class="app-card-body">
+                            <div class="alert alert-success" role="alert">
+                                <i class="bi bi-check-circle me-2"></i>
+                                Model training completed successfully! Review the results below.
+                            </div>
+                            
+                            <!-- Model Summary -->
+                            <div class="summary-section">
+                                <h5 class="summary-title">Model Summary</h5>
+                                <div id="model-summary">
+                                    <!-- Summary will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Performance Metrics -->
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <h5 class="mb-3">Performance Metrics</h5>
+                                </div>
+                                <div id="metrics-container" class="row">
+                                    <!-- Metrics cards will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Visualizations -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="chart-container">
+                                        <div class="chart-header">
+                                            <h6 class="chart-title">Model Comparison</h6>
+                                        </div>
+                                        <div id="model-comparison-chart">
+                                            <!-- Chart will be inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="chart-container">
+                                        <div class="chart-header">
+                                            <h6 class="chart-title">Feature Importance</h6>
+                                        </div>
+                                        <div id="feature-importance-chart">
+                                            <!-- Chart will be inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Additional Charts -->
+                            <div class="row mb-4" id="additional-charts">
+                                <!-- Additional charts will be inserted here -->
+                            </div>
+                            
+                            <!-- AI Insights -->
+                            <div class="mb-4">
+                                <h5 class="mb-3">AI-Generated Insights</h5>
+                                <div id="insights-container">
+                                    <!-- Insights will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Model Deployment -->
+                            <div class="deployment-card">
+                                <div class="deployment-header">
+                                    <h5 class="deployment-title">Model Deployment</h5>
+                                    <span class="badge bg-success">Ready</span>
+                                </div>
+                                <div class="deployment-body">
+                                    <p>Your model is ready for deployment. Choose from the options below:</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">
+                                                        <i class="bi bi-cloud-upload me-2"></i>
+                                                        Deploy as API
+                                                    </h6>
+                                                    <p class="card-text">Deploy your model as a REST API endpoint for real-time predictions.</p>
+                                                    <button id="deploy-api-btn" class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-rocket me-1"></i> Deploy API
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">
+                                                        <i class="bi bi-download me-2"></i>
+                                                        Download Model
+                                                    </h6>
+                                                    <p class="card-text">Download the trained model for use in your own applications.</p>
+                                                    <button id="download-model-btn" class="btn btn-outline-primary btn-sm">
+                                                        <i class="bi bi-download me-1"></i> Download
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- API Endpoint Display -->
+                            <div id="api-endpoint-container" class="d-none">
+                                <h5 class="mb-3">API Endpoint</h5>
+                                <div class="api-endpoint">
+                                    <code id="api-endpoint-url">https://api.example.com/predict/your-model-id</code>
+                                    <button class="copy-btn" onclick="copyToClipboard('api-endpoint-url')">
+                                        <i class="bi bi-clipboard"></i>
+                                    </button>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>Example Usage:</h6>
+                                    <pre><code>curl -X POST https://api.example.com/predict/your-model-id \
+  -H "Content-Type: application/json" \
+  -d '{"feature1": 1.0, "feature2": 2.0}'</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button id="step-6-prev" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Previous
+                        </button>
+                        <button id="start-new-model-btn" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-1"></i> Start New Model
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay d-none">
+        <div class="spinner-container">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="loading-text" id="loading-text">Processing...</div>
+            <div class="loading-subtext" id="loading-subtext">Please wait while we analyze your data</div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container">
+        <!-- Toasts will be inserted here -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script>
+        // Global variables
+        let currentStep = 1;
+        let datasetInfo = null;
+        let selectedTarget = null;
+        let selectedFeatures = [];
+        let selectedApproach = null;
+        let selectedModels = [];
+        let modelingResults = null;
+        let sessionId = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadDataset();
+        });
+
+        function initializeApp() {
+            // Get session ID from URL or generate new one
+            const urlParams = new URLSearchParams(window.location.search);
+            sessionId = urlParams.get('session_id') || generateSessionId();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Initialize step indicator
+            updateStepIndicator();
+        }
+
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function setupEventListeners() {
+            // Sidebar toggle
+            document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+            document.getElementById('collapse-sidebar').addEventListener('click', toggleSidebar);
+            
+            // Step navigation
+            document.getElementById('step-1-next').addEventListener('click', () => goToStep(2));
+            document.getElementById('step-2-prev').addEventListener('click', () => goToStep(1));
+            document.getElementById('step-2-next').addEventListener('click', () => goToStep(3));
+            document.getElementById('step-3-prev').addEventListener('click', () => goToStep(2));
+            document.getElementById('step-3-next').addEventListener('click', () => goToStep(4));
+            document.getElementById('step-4-prev').addEventListener('click', () => goToStep(3));
+            document.getElementById('step-4-next').addEventListener('click', () => goToStep(5));
+            document.getElementById('step-5-prev').addEventListener('click', () => goToStep(4));
+            document.getElementById('step-5-next').addEventListener('click', trainModel);
+            document.getElementById('step-6-prev').addEventListener('click', () => goToStep(5));
+            
+            // Target variable selection
+            document.getElementById('target-variable-select').addEventListener('change', handleTargetSelection);
+            
+            // Feature selection
+            document.getElementById('feature-search').addEventListener('input', filterFeatures);
+            document.getElementById('select-all-features').addEventListener('click', selectAllFeatures);
+            document.getElementById('clear-all-features').addEventListener('click', clearAllFeatures);
+            
+            // Model approach selection
+            document.querySelectorAll('.selection-card').forEach(card => {
+                card.addEventListener('click', handleApproachSelection);
+            });
+            
+            // Test size slider
+            document.getElementById('test-size').addEventListener('input', updateTestSizeValue);
+            
+            // Buttons
+            document.getElementById('start-new-btn').addEventListener('click', startNewModel);
+            document.getElementById('start-new-model-btn').addEventListener('click', startNewModel);
+            document.getElementById('refresh-dataset-btn').addEventListener('click', loadDataset);
+            document.getElementById('download-results-btn').addEventListener('click', downloadResults);
+            document.getElementById('deploy-api-btn').addEventListener('click', deployModel);
+            document.getElementById('download-model-btn').addEventListener('click', downloadModel);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+
+        function goToStep(step) {
+            if (step < 1 || step > 6) return;
+            
+            // Hide current step
+            document.getElementById(`step-${currentStep}-content`).classList.remove('active');
+            
+            // Show new step
+            document.getElementById(`step-${step}-content`).classList.add('active');
+            
+            // Update current step
+            currentStep = step;
+            
+            // Update step indicator
+            updateStepIndicator();
+        }
+
+        function updateStepIndicator() {
+            const steps = document.querySelectorAll('.step');
+            const progressBar = document.getElementById('step-progress');
+            
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                    step.querySelector('.step-circle').innerHTML = '<i class="bi bi-check"></i>';
+                } else if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                    step.querySelector('.step-circle').innerHTML = stepNumber;
+                } else {
+                    step.querySelector('.step-circle').innerHTML = stepNumber;
+                }
+            });
+            
+            // Update progress bar
+            const progressPercentage = ((currentStep - 1) / 5) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        async function loadDataset() {
+            showLoading('Loading dataset...', 'Analyzing data structure and quality');
+            
+            try {
+                const response = await fetch(`/api/code-free-modeling/analyze-dataset?session_id=${sessionId}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to load dataset');
+                }
+                
+                datasetInfo = data;
+                displayDatasetPreview(data);
+                populateTargetVariableOptions(data.columns);
+                
+                // Show dataset chip
+                const datasetChip = document.getElementById('dataset-chip');
+                const datasetName = document.getElementById('dataset-name');
+                datasetName.textContent = data.filename || 'Dataset loaded';
+                datasetChip.classList.remove('d-none');
+                
+                hideLoading();
+                showToast('success', 'Dataset Loaded', 'Dataset analysis completed successfully');
+                
+            } catch (error) {
+                hideLoading();
+                showToast('error', 'Error', error.message);
+                console.error('Error loading dataset:', error);
+            }
+        }
+
+        function displayDatasetPreview(data) {
+            // Update dataset statistics
+            document.getElementById('dataset-rows').textContent = data.shape[0].toLocaleString();
+            document.getElementById('dataset-columns').textContent = data.shape[1].toLocaleString();
+            document.getElementById('dataset-missing').textContent = `${data.data_quality.missing_percentage.toFixed(1)}%`;
+            
+            // Count data types
+            const typeCount = {};
+            data.columns.forEach(col => {
+                const type = col.is_numeric ? 'Numeric' : 'Categorical';
+                typeCount[type] = (typeCount[type] || 0) + 1;
+            });
+            document.getElementById('dataset-types').textContent = Object.keys(typeCount).length;
+            
+            // Display sample data (first 5 rows)
+            const previewHeader = document.getElementById('dataset-preview-header');
+            const previewBody = document.getElementById('dataset-preview-body');
+            
+            // Clear existing content
+            previewHeader.innerHTML = '';
+            previewBody.innerHTML = '';
+            
+            // Add headers
+            data.columns.slice(0, 10).forEach(col => {
+                const th = document.createElement('th');
+                th.textContent = col.name;
+                previewHeader.appendChild(th);
+            });
+            
+            // Add sample rows (simulate data)
+            for (let i = 0; i < 5; i++) {
+                const tr = document.createElement('tr');
+                data.columns.slice(0, 10).forEach(col => {
+                    const td = document.createElement('td');
+                    if (col.sample_values && col.sample_values.length > 0) {
+                        td.textContent = col.sample_values[i % col.sample_values.length] || '-';
+                    } else {
+                        td.textContent = '-';
+                    }
+                    tr.appendChild(td);
+                });
+                previewBody.appendChild(tr);
+            }
+            
+            // Display column information
+            const columnInfoBody = document.getElementById('column-info-body');
+            columnInfoBody.innerHTML = '';
+            
+            data.columns.forEach(col => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${col.name}</strong></td>
+                    <td><span class="badge ${col.is_numeric ? 'bg-primary' : 'bg-secondary'}">${col.is_numeric ? 'Numeric' : 'Categorical'}</span></td>
+                    <td>${col.missing_percentage.toFixed(1)}%</td>
+                    <td>${col.unique_count.toLocaleString()}</td>
+                    <td><small>${col.sample_values ? col.sample_values.slice(0, 3).join(', ') : '-'}</small></td>
+                `;
+                columnInfoBody.appendChild(tr);
+            });
+        }
+
+        function populateTargetVariableOptions(columns) {
+            const select = document.getElementById('target-variable-select');
+            select.innerHTML = '<option value="" selected disabled>Select a target variable</option>';
+            
+            columns.forEach(col => {
+                if (col.suitable_for_target) {
+                    const option = document.createElement('option');
+                    option.value = col.name;
+                    option.textContent = `${col.name} (${col.problem_type})`;
+                    option.dataset.problemType = col.problem_type;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        function handleTargetSelection(event) {
+            const selectedValue = event.target.value;
+            const selectedOption = event.target.selectedOptions[0];
+            
+            if (!selectedValue) return;
+            
+            selectedTarget = {
+                name: selectedValue,
+                problemType: selectedOption.dataset.problemType
+            };
+            
+            // Find column info
+            const columnInfo = datasetInfo.columns.find(col => col.name === selectedValue);
+            
+            // Display target preview
+            displayTargetPreview(columnInfo);
+            
+            // Enable next button
+            document.getElementById('step-2-next').disabled = false;
+            
+            // Populate features for next step
+            populateFeatureSelection();
+        }
+
+        function displayTargetPreview(columnInfo) {
+            const container = document.getElementById('target-preview-container');
+            container.classList.remove('d-none');
+            
+            // Update statistics
+            document.getElementById('target-type').textContent = columnInfo.is_numeric ? 'Numeric' : 'Categorical';
+            document.getElementById('problem-type').textContent = selectedTarget.problemType;
+            document.getElementById('target-unique').textContent = columnInfo.unique_count.toLocaleString();
+            document.getElementById('target-missing').textContent = `${columnInfo.missing_percentage.toFixed(1)}%`;
+            
+            // Create simple distribution chart
+            const chartContainer = document.getElementById('target-distribution-chart');
+            chartContainer.innerHTML = '';
+            
+            if (columnInfo.value_counts) {
+                // Categorical distribution
+                const labels = Object.keys(columnInfo.value_counts);
+                const values = Object.values(columnInfo.value_counts);
+                
+                const chartHtml = labels.map((label, index) => {
+                    const percentage = (values[index] / values.reduce((a, b) => a + b, 0)) * 100;
+                    return `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>${label}</span>
+                            <div class="d-flex align-items-center">
+                                <div class="progress me-2" style="width: 100px; height: 8px;">
+                                    <div class="progress-bar" style="width: ${percentage}%"></div>
+                                </div>
+                                <small>${percentage.toFixed(1)}%</small>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                chartContainer.innerHTML = chartHtml;
+            } else {
+                chartContainer.innerHTML = '<p class="text-muted">Distribution chart not available for this variable type.</p>';
+            }
+        }
+
+        function populateFeatureSelection() {
+            const featureList = document.getElementById('feature-list');
+            featureList.innerHTML = '';
+            
+            selectedFeatures = [];
+            
+            datasetInfo.columns.forEach(col => {
+                if (col.name === selectedTarget.name) return; // Skip target variable
+                
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.innerHTML = `
+                    <input type="checkbox" class="form-check-input" id="feature-${col.name}" value="${col.name}">
+                    <div class="feature-item-info">
+                        <div class="feature-item-title">${col.name}</div>
+                        <div class="feature-item-subtitle">
+                            ${col.is_numeric ? 'Numeric' : 'Categorical'} • 
+                            ${col.unique_count} unique values • 
+                            ${col.missing_percentage.toFixed(1)}% missing
+                        </div>
+                    </div>
+                    <span class="badge ${col.is_numeric ? 'badge-primary' : 'badge-secondary'} feature-item-badge">
+                        ${col.is_numeric ? 'Numeric' : 'Categorical'}
+                    </span>
+                `;
+                
+                const checkbox = featureItem.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', updateFeatureSelection);
+                
+                featureList.appendChild(featureItem);
+            });
+            
+            updateSelectedCount();
+        }
+
+        function updateFeatureSelection() {
+            const checkboxes = document.querySelectorAll('#feature-list input[type="checkbox"]');
+            selectedFeatures = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            updateSelectedCount();
+            
+            // Enable/disable next button
+            document.getElementById('step-3-next').disabled = selectedFeatures.length === 0;
+        }
+
+        function updateSelectedCount() {
+            document.getElementById('selected-count').textContent = `${selectedFeatures.length} selected`;
+        }
+
+        function filterFeatures() {
+            const searchTerm = document.getElementById('feature-search').value.toLowerCase();
+            const featureItems = document.querySelectorAll('.feature-item');
+            
+            featureItems.forEach(item => {
+                const title = item.querySelector('.feature-item-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function selectAllFeatures() {
+            const checkboxes = document.querySelectorAll('#feature-list input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                if (cb.closest('.feature-item').style.display !== 'none') {
+                    cb.checked = true;
+                }
+            });
+            updateFeatureSelection();
+        }
+
+        function clearAllFeatures() {
+            const checkboxes = document.querySelectorAll('#feature-list input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+            updateFeatureSelection();
+        }
+
+        function handleApproachSelection(event) {
+            const card = event.currentTarget;
+            const approach = card.dataset.approach;
+            
+            // Remove selection from other cards
+            document.querySelectorAll('.selection-card').forEach(c => c.classList.remove('selected'));
+            
+            // Select current card
+            card.classList.add('selected');
+            selectedApproach = approach;
+            
+            // Load models for selected approach
+            loadModelsForApproach(approach);
+        }
+
+        async function loadModelsForApproach(approach) {
+            const container = document.getElementById('model-cards-container');
+            container.innerHTML = '';
+            
+            let problemType;
+            if (approach === 'automl') {
+                problemType = selectedTarget.problemType;
+            } else {
+                problemType = approach;
+            }
+            
+            try {
+                const response = await fetch(`/api/code-free-modeling/model-info?problem_type=${problemType}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to load model information');
+                }
+                
+                const models = data.models;
+                
+                Object.keys(models).forEach(modelName => {
+                    const modelInfo = models[modelName];
+                    const modelCard = document.createElement('div');
+                    modelCard.className = 'col-md-6 mb-3';
+                    modelCard.innerHTML = `
+                        <div class="model-card" data-model="${modelName}">
+                            <div class="model-card-header">
+                                <h6 class="model-card-title">
+                                    <i class="bi bi-cpu"></i>
+                                    ${modelName}
+                                </h6>
+                                <div class="selection-card-check">
+                                    <i class="bi bi-check"></i>
+                                </div>
+                            </div>
+                            <div class="model-card-body">
+                                <p>${modelInfo.description}</p>
+                            </div>
+                            <div class="model-card-footer">
+                                <small class="text-muted">Click to select</small>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const card = modelCard.querySelector('.model-card');
+                    card.addEventListener('click', () => handleModelSelection(modelName, modelInfo));
+                    
+                    container.appendChild(modelCard);
+                });
+                
+                if (approach === 'automl') {
+                    // Auto-select all models for AutoML
+                    selectedModels = Object.keys(models);
+                    document.querySelectorAll('.model-card').forEach(card => {
+                        card.classList.add('selected');
+                    });
+                    document.getElementById('step-4-next').disabled = false;
+                }
+                
+            } catch (error) {
+                showToast('error', 'Error', error.message);
+                console.error('Error loading models:', error);
+            }
+        }
+
+        function handleModelSelection(modelName, modelInfo) {
+            const card = event.currentTarget;
+            
+            if (selectedApproach === 'automl') {
+                // For AutoML, all models are selected
+                return;
+            }
+            
+            // Toggle selection
+            if (card.classList.contains('selected')) {
+                card.classList.remove('selected');
+                selectedModels = selectedModels.filter(m => m !== modelName);
+            } else {
+                card.classList.add('selected');
+                selectedModels.push(modelName);
+            }
+            
+            // Show model info
+            displaySelectedModelInfo(modelName, modelInfo);
+            
+            // Enable/disable next button
+            document.getElementById('step-4-next').disabled = selectedModels.length === 0;
+        }
+
+        function displaySelectedModelInfo(modelName, modelInfo) {
+            const container = document.getElementById('selected-model-info');
+            container.classList.remove('d-none');
+            
+            document.getElementById('selected-model-name').textContent = modelName;
+            document.getElementById('selected-model-description').textContent = modelInfo.description;
+            
+            // Parse pros and cons
+            const pros = modelInfo.pros.split(',').map(s => s.trim());
+            const cons = modelInfo.cons.split(',').map(s => s.trim());
+            
+            const strengthsList = document.getElementById('selected-model-strengths');
+            strengthsList.innerHTML = pros.map(pro => `<li>${pro}</li>`).join('');
+            
+            const limitationsList = document.getElementById('selected-model-limitations');
+            limitationsList.innerHTML = cons.map(con => `<li>${con}</li>`).join('');
+            
+            // Best for (generic recommendations)
+            const bestForList = document.getElementById('selected-model-best-for');
+            const bestFor = selectedTarget.problemType === 'classification' 
+                ? ['Binary classification', 'Multi-class problems', 'Feature importance analysis']
+                : ['Continuous predictions', 'Regression analysis', 'Trend forecasting'];
+            bestForList.innerHTML = bestFor.map(item => `<li>${item}</li>`).join('');
+        }
+
+        function updateTestSizeValue() {
+            const value = document.getElementById('test-size').value;
+            document.getElementById('test-size-value').textContent = `${value}%`;
+        }
+
+        async function trainModel() {
+            showLoading('Training models...', 'This may take a few minutes depending on your data size');
+            
+            try {
+                const trainingConfig = {
+                    session_id: sessionId,
+                    target_column: selectedTarget.name,
+                    feature_columns: selectedFeatures,
+                    problem_type: selectedTarget.problemType,
+                    selected_models: selectedModels,
+                    preprocessing_options: {
+                        handle_missing: true,
+                        scale_features: true,
+                        create_interactions: document.getElementById('auto-feature-engineering').checked
+                    },
+                    use_hyperparameter_tuning: document.getElementById('hyperparameter-tuning').checked,
+                    test_size: parseInt(document.getElementById('test-size').value) / 100,
+                    cross_validation: document.getElementById('cross-validation').checked,
+                    random_state: parseInt(document.getElementById('random-state').value)
+                };
+                
+                const response = await fetch('/api/code-free-modeling/train', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(trainingConfig)
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Training failed');
+                }
+                
+                modelingResults = data;
+                displayResults(data);
+                
+                hideLoading();
+                goToStep(6);
+                showToast('success', 'Training Complete', 'Models trained successfully!');
+                
+            } catch (error) {
+                hideLoading();
+                showToast('error', 'Training Failed', error.message);
+                console.error('Error training models:', error);
+            }
+        }
+
+        function displayResults(results) {
+            // Display model summary
+            displayModelSummary(results);
+            
+            // Display performance metrics
+            displayPerformanceMetrics(results.results);
+            
+            // Display visualizations
+            displayVisualizations(results.visualizations);
+            
+            // Display insights
+            displayInsights(results.insights);
+        }
+
+        function displayModelSummary(results) {
+            const container = document.getElementById('model-summary');
+            container.innerHTML = `
+                <div class="summary-item">
+                    <div class="summary-label">Problem Type:</div>
+                    <div class="summary-value">${selectedTarget.problemType}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Target Variable:</div>
+                    <div class="summary-value">${selectedTarget.name}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Features Used:</div>
+                    <div class="summary-value">${selectedFeatures.length} features</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Models Trained:</div>
+                    <div class="summary-value">${Object.keys(results.results).length} models</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Processing Time:</div>
+                    <div class="summary-value">${results.processing_time}s</div>
+                </div>
+            `;
+        }
+
+        function displayPerformanceMetrics(results) {
+            const container = document.getElementById('metrics-container');
+            container.innerHTML = '';
+            
+            // Find best model
+            const bestModel = findBestModel(results);
+            const metrics = results[bestModel].metrics;
+            
+            if (selectedTarget.problemType === 'classification') {
+                const metricsData = [
+                    { label: 'Accuracy', value: metrics.accuracy, description: 'Overall prediction accuracy' },
+                    { label: 'Precision', value: metrics.precision, description: 'Positive prediction accuracy' },
+                    { label: 'Recall', value: metrics.recall, description: 'True positive detection rate' },
+                    { label: 'F1 Score', value: metrics.f1_score, description: 'Harmonic mean of precision and recall' }
+                ];
+                
+                metricsData.forEach(metric => {
+                    const metricCard = document.createElement('div');
+                    metricCard.className = 'col-md-3 mb-3';
+                    metricCard.innerHTML = `
+                        <div class="metric-card">
+                            <div class="metric-value">${(metric.value * 100).toFixed(1)}%</div>
+                            <div class="metric-label">${metric.label}</div>
+                            <div class="metric-description">${metric.description}</div>
+                        </div>
+                    `;
+                    container.appendChild(metricCard);
+                });
+            } else {
+                const metricsData = [
+                    { label: 'R² Score', value: metrics.r2_score, description: 'Coefficient of determination' },
+                    { label: 'RMSE', value: metrics.rmse, description: 'Root mean squared error' },
+                    { label: 'MAE', value: metrics.mae, description: 'Mean absolute error' }
+                ];
+                
+                metricsData.forEach(metric => {
+                    const metricCard = document.createElement('div');
+                    metricCard.className = 'col-md-4 mb-3';
+                    metricCard.innerHTML = `
+                        <div class="metric-card">
+                            <div class="metric-value">${metric.value.toFixed(3)}</div>
+                            <div class="metric-label">${metric.label}</div>
+                            <div class="metric-description">${metric.description}</div>
+                        </div>
+                    `;
+                    container.appendChild(metricCard);
+                });
+            }
+        }
+
+        function findBestModel(results) {
+            let bestModel = null;
+            let bestScore = -Infinity;
+            
+            Object.keys(results).forEach(modelName => {
+                if (!results[modelName].metrics) return;
+                
+                const score = selectedTarget.problemType === 'classification' 
+                    ? results[modelName].metrics.accuracy
+                    : results[modelName].metrics.r2_score;
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestModel = modelName;
+                }
+            });
+            
+            return bestModel;
+        }
+
+        function displayVisualizations(visualizations) {
+            // Model comparison chart
+            if (visualizations.model_comparison) {
+                const container = document.getElementById('model-comparison-chart');
+                container.innerHTML = `<img src="data:image/png;base64,${visualizations.model_comparison}" class="img-fluid" alt="Model Comparison">`;
+            }
+            
+            // Feature importance chart
+            if (visualizations.feature_importance) {
+                const container = document.getElementById('feature-importance-chart');
+                container.innerHTML = `<img src="data:image/png;base64,${visualizations.feature_importance}" class="img-fluid" alt="Feature Importance">`;
+            }
+            
+            // Additional charts
+            const additionalContainer = document.getElementById('additional-charts');
+            additionalContainer.innerHTML = '';
+            
+            if (visualizations.confusion_matrix) {
+                const chartDiv = document.createElement('div');
+                chartDiv.className = 'col-md-6';
+                chartDiv.innerHTML = `
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h6 class="chart-title">Confusion Matrix</h6>
+                        </div>
+                        <img src="data:image/png;base64,${visualizations.confusion_matrix}" class="img-fluid" alt="Confusion Matrix">
+                    </div>
+                `;
+                additionalContainer.appendChild(chartDiv);
+            }
+            
+            if (visualizations.roc_curve) {
+                const chartDiv = document.createElement('div');
+                chartDiv.className = 'col-md-6';
+                chartDiv.innerHTML = `
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h6 class="chart-title">ROC Curve</h6>
+                        </div>
+                        <img src="data:image/png;base64,${visualizations.roc_curve}" class="img-fluid" alt="ROC Curve">
+                    </div>
+                `;
+                additionalContainer.appendChild(chartDiv);
+            }
+            
+            if (visualizations.residual_plot) {
+                const chartDiv = document.createElement('div');
+                chartDiv.className = 'col-md-12';
+                chartDiv.innerHTML = `
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h6 class="chart-title">Residual Plot</h6>
+                        </div>
+                        <img src="data:image/png;base64,${visualizations.residual_plot}" class="img-fluid" alt="Residual Plot">
+                    </div>
+                `;
+                additionalContainer.appendChild(chartDiv);
+            }
+        }
+
+        function displayInsights(insights) {
+            const container = document.getElementById('insights-container');
+            container.innerHTML = '';
+            
+            insights.forEach(insight => {
+                const insightCard = document.createElement('div');
+                insightCard.className = `insight-card ${insight.priority.toLowerCase()}`;
+                insightCard.innerHTML = `
+                    <div class="insight-header">
+                        <h6 class="insight-title">${insight.title}</h6>
+                        <span class="badge insight-badge ${getPriorityBadgeClass(insight.priority)}">${insight.priority}</span>
+                    </div>
+                    <div class="insight-body">
+                        <p>${insight.description}</p>
+                        <small class="text-muted">Category: ${insight.category}</small>
+                    </div>
+                `;
+                container.appendChild(insightCard);
+            });
+        }
+
+        function getPriorityBadgeClass(priority) {
+            switch (priority.toLowerCase()) {
+                case 'high': return 'bg-danger';
+                case 'medium': return 'bg-warning';
+                case 'low': return 'bg-success';
+                default: return 'bg-secondary';
+            }
+        }
+
+        async function deployModel() {
+            if (!modelingResults) return;
+            
+            const bestModel = findBestModel(modelingResults.results);
+            
+            try {
+                const response = await fetch('/api/code-free-modeling/deploy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        modeling_id: modelingResults.modeling_id,
+                        model_name: bestModel
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Deployment failed');
+                }
+                
+                // Show API endpoint
+                const container = document.getElementById('api-endpoint-container');
+                const urlElement = document.getElementById('api-endpoint-url');
+                urlElement.textContent = window.location.origin + data.api_endpoint;
+                container.classList.remove('d-none');
+                
+                showToast('success', 'Model Deployed', 'Your model is now available as an API endpoint');
+                
+            } catch (error) {
+                showToast('error', 'Deployment Failed', error.message);
+                console.error('Error deploying model:', error);
+            }
+        }
+
+        async function downloadResults() {
+            if (!modelingResults) return;
+            
+            try {
+                const response = await fetch('/api/code-free-modeling/download', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        modeling_id: modelingResults.modeling_id
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Download failed');
+                }
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `modeling_results_${modelingResults.modeling_id.slice(0, 8)}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                showToast('success', 'Download Started', 'Results file is being downloaded');
+                
+            } catch (error) {
+                showToast('error', 'Download Failed', error.message);
+                console.error('Error downloading results:', error);
+            }
+        }
+
+        function downloadModel() {
+            showToast('info', 'Feature Coming Soon', 'Model download functionality will be available soon');
+        }
+
+        function startNewModel() {
+            if (confirm('Are you sure you want to start a new model? This will reset all current progress.')) {
+                // Reset all variables
+                currentStep = 1;
+                datasetInfo = null;
+                selectedTarget = null;
+                selectedFeatures = [];
+                selectedApproach = null;
+                selectedModels = [];
+                modelingResults = null;
+                
+                // Reset UI
+                goToStep(1);
+                document.getElementById('target-variable-select').value = '';
+                document.getElementById('target-preview-container').classList.add('d-none');
+                document.getElementById('step-2-next').disabled = true;
+                document.getElementById('step-3-next').disabled = true;
+                document.getElementById('step-4-next').disabled = true;
+                
+                // Clear selections
+                document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('selected'));
+                document.querySelectorAll('.model-card').forEach(card => card.classList.remove('selected'));
+                
+                showToast('info', 'New Model Started', 'You can now configure a new model');
+            }
+        }
+
+        function showLoading(text, subtext) {
+            const overlay = document.getElementById('loading-overlay');
+            const loadingText = document.getElementById('loading-text');
+            const loadingSubtext = document.getElementById('loading-subtext');
+            
+            loadingText.textContent = text;
+            loadingSubtext.textContent = subtext;
+            overlay.classList.remove('d-none');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('d-none');
+        }
+
+        function showToast(type, title, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const iconMap = {
+                success: 'bi-check-circle-fill',
+                error: 'bi-exclamation-triangle-fill',
+                warning: 'bi-exclamation-triangle-fill',
+                info: 'bi-info-circle-fill'
+            };
+            
+            toast.innerHTML = `
+                <i class="toast-icon bi ${iconMap[type]}"></i>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="removeToast(this)">
+                    <i class="bi bi-x"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    removeToast(toast.querySelector('.toast-close'));
+                }
+            }, 5000);
+        }
+
+        function removeToast(button) {
+            const toast = button.closest('.toast');
+            toast.classList.add('slide-out');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('success', 'Copied', 'API endpoint copied to clipboard');
+            }).catch(() => {
+                showToast('error', 'Copy Failed', 'Failed to copy to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>
